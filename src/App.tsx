@@ -4,36 +4,91 @@ import './App.css'
 import { TestComponent } from './components/TestComponent'
 import { CharacterPanel } from './components/CharacterPanel'
 
+interface Char {
+  class: string,
+  name: string,
+  organisation?: string,
+  pronouns: string,
+  race: string,
+  token?: string,
+  scale?: number,
+}
+
+const chars: Char[] = [
+  {
+    class: 'Fighter',
+    name: 'Ahsha Sallas',
+    organisation: 'astorrel-2-private',
+    pronouns: 'she/her',
+    race: 'Half-orc',
+    token: 'ahsha-sallas',
+  },
+  {
+    class: 'Druid',
+    name: 'Ephaine Seren',
+    organisation: 'astorrel-2-private',
+    pronouns: 'she/her',
+    race: 'Human',
+    token: 'ephaine-seren',
+  },
+  {
+    class: 'Bard',
+    name: 'Redwyn Humpledopper',
+    organisation: 'astorrel-2-private',
+    pronouns: 'she/her',
+    race: 'Dwarf',
+    token: 'redwyn-humpledopper',
+  },
+  {
+    class: 'Rogue',
+    name: 'Whisper on the Breeze',
+    organisation: 'astorrel-2-private',
+    pronouns: 'they/them',
+    race: 'Tabaxi',
+    token: 'whisper-on-the-breeze',
+  },
+  {
+    class: 'Warlock',
+    name: 'Saoirse ó Dochartaigh',
+    pronouns: 'she/her',
+    race: 'Aasimar',
+    token: 'saoirse-o-dochartaigh',
+  },
+  {
+    class: 'Sorcerer',
+    name: 'Thanea Morlay',
+    pronouns: 'she/her',
+    race: 'Aasimar',
+    token: 'thanea-morlay',
+  },
+  {
+    class: 'Fighter',
+    name: 'Torbra Tauff',
+    pronouns: 'she/her',
+    race: 'Earth Genasi',
+    token: 'torbra-tauff',
+  },
+  {
+    class: 'Druid',
+    name: 'Wizira',
+    pronouns: 'she/her',
+    race: 'Firbolg',
+    token: 'wizira',
+  },
+]
+
 const App = (): JSX.Element => (
   <div className="App">
-    <CharacterPanel
-      avatarURL="https://raw.githubusercontent.com/jesskelsall/astarus/main/images/tokens/ahsha-sallas.png"
-      details="she/her"
-      name="Ahsha Sallas"
-      organisationURL="https://raw.githubusercontent.com/jesskelsall/astarus/main/images/ranks/astorrel-2-private.png"
-      subheading="Half-orc Fighter"
-    />
-    <CharacterPanel
-      avatarURL="https://raw.githubusercontent.com/jesskelsall/astarus/main/images/tokens/ephaine-seren.png"
-      details="she/her"
-      name="Ephaine Seren"
-      organisationURL="https://raw.githubusercontent.com/jesskelsall/astarus/main/images/ranks/astorrel-2-private.png"
-      subheading="Human Druid"
-    />
-    <CharacterPanel
-      avatarURL="https://raw.githubusercontent.com/jesskelsall/astarus/main/images/tokens/redwyn-humpledopper.png"
-      details="she/her"
-      name="Redwyn Humpledopper"
-      organisationURL="https://raw.githubusercontent.com/jesskelsall/astarus/main/images/ranks/astorrel-2-private.png"
-      subheading="Dwarf Bard"
-    />
-    <CharacterPanel
-      avatarURL="https://raw.githubusercontent.com/jesskelsall/astarus/main/images/tokens/whisper-on-the-breeze.png"
-      details="they/them"
-      name="Whisper on the Breeze"
-      organisationURL="https://raw.githubusercontent.com/jesskelsall/astarus/main/images/ranks/astorrel-2-private.png"
-      subheading="Tabaxi Rogue"
-    />
+    {chars.map((char) => (
+      <CharacterPanel
+        avatarURL={char.token ? `https://raw.githubusercontent.com/jesskelsall/astarus/main/images/tokens/${char.token}.png` : ''}
+        details={char.pronouns}
+        name={char.name}
+        nameScale={char.scale || 1}
+        organisationURL={char.organisation ? `https://raw.githubusercontent.com/jesskelsall/astarus/main/images/ranks/${char.organisation}.png` : ''}
+        subheading={`${char.race} ${char.class}`}
+      />
+    ))}
   </div>
 )
 

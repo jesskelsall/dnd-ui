@@ -1,0 +1,22 @@
+@import './variables/dimensions';
+@import './variables/colors';
+@import './variables/fonts';
+
+@import './components/CharacterPanel';
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: $black;
+}
+
+h1, h2, h3 {
+  text-align: left;
+}
+
+.shadow {
+  background-color: $black;
+  margin-left: $shadow-horizontal;
+  margin-right: -$shadow-horizontal;
+  margin-top: $shadow-vertical;
+  margin-bottom: -$shadow-vertical;
+}
