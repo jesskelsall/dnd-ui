@@ -1,0 +1,19 @@
+@mixin square($size) {
+  height: $size;
+  width: $size;
+}
+
+@mixin rounded-corners {
+  border-radius: $border-radius;
+}
+
+@mixin absolute-shadow($left, $top) {
+  left: $left;
+  top: $top;
+
+  &.shadow {
+    background-color: $black;
+    left: $left + $shadow-horizontal;
+    top: $top + $shadow-vertical;
+  }
+}

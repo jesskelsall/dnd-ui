@@ -15,6 +15,7 @@
   ],
   "root": true,
   "rules": {
+    "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/no-use-before-define": [
       "error"
     ],
@@ -36,6 +37,7 @@
       }
     ],
     "import/prefer-default-export": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "no-console": [
       "error",
       {
@@ -46,6 +48,7 @@
         ]
       }
     ],
+    "no-shadow": "off",
     "no-use-before-define": "off",
     "object-property-newline": "error",
     "react/jsx-filename-extension": [

@@ -1,0 +1,64 @@
+@mixin shadow {
+  box-shadow: 6px 6px 0px 0px $black;
+}
+
+.character-card-small {
+  position: relative;
+  height: $scc-height;
+  width: $scc-width;
+
+  .character-card__avatar {
+    @include rounded-corners;
+    @include square($scc-avatar-size);
+    @include absolute-shadow(0px, 0px);
+    position: absolute;
+    overflow: hidden;
+  }
+
+  .character-card__icon {
+    @include square($scc-icon-size);
+    position: absolute;
+    bottom: $scc-icon-position;
+    right: $scc-icon-position;
+  }
+
+  .character-card__box {
+    @include rounded-corners;
+    @include absolute-shadow($scc-box-left, $scc-box-top);
+    position: absolute;
+    height: $scc-box-height;
+    width: $scc-box-width;
+    background-color: $grey;
+  }
+
+  .character-card__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: $scc-text-margin-left;
+    height: 100%;
+    font-size: 28px;
+
+    h1, h2, h3 {
+      margin: 0;
+    }
+
+    h1 {
+      font-weight: bold;
+      font-size: 1em;
+      line-height: 34px;
+    }
+  
+    h2 {
+      font-size: 20px;
+      line-height: 24px;
+      opacity: 0.7;
+    }
+  
+    h3 {
+      font-size: 16px;
+      line-height: 20px;
+      opacity: 0.7;
+    }
+  }
+}
