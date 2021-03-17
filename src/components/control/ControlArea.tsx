@@ -1,28 +1,32 @@
-import { set } from 'lodash/fp'
-import React from 'react'
-import { Data } from '../../types/data'
-import { Character } from '../../types/data/character'
-import { CharacterEditor } from './CharacterEditor'
+import { toPairs } from 'lodash/fp'
+import React, { useState } from 'react'
+import { PAGES } from '../../consts/pages'
+import { DataPropagationProps } from '../../types/DataPropagation'
+import { Page } from '../../types/Page'
+import { Navbar } from './Navbar'
+import { CharactersPage } from './pages/CharactersPage'
+import { DataPage } from './pages/DataPage'
+import { DisplayPage } from './pages/DisplayPage'
 
-export interface ControlAreaProps {
-  data: Data,
-  onSave: (data: Data) => void,
+const pages: Record<Page, (props: DataPropagationProps) => JSX.Element> = {
+  Characters: CharactersPage,
+  Display: DisplayPage,
+  Data: DataPage,
 }
 
 export const ControlArea = ({
   data,
   onSave,
-}: ControlAreaProps): JSX.Element => {
-  const onSaveAhsha = (ahsha: Character) => {
-    onSave(set('characters.ahsha', ahsha, data))
-  }
+}: DataPropagationProps): JSX.Element => {
+  const [page, setPage] = useState(PAGES[0])
 
   return (
     <div className="area control-area">
-      <CharacterEditor
-        character={data.characters.ahsha}
-        onSave={onSaveAhsha}
-      />
+      <Navbar activePage={page} onClick={setPage} />
+      {toPairs(pages).map(([pageName, PageComponent]) => {
+        const isActivePage = pageName === page
+        return isActivePage ? <PageComponent data={data} onSave={onSave} /> : null
+      })}
     </div>
   )
 }
