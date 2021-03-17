@@ -3,8 +3,8 @@
   width: $size;
 }
 
-@mixin rounded-corners {
-  border-radius: $border-radius;
+@mixin rounded-corners($radius: $border-radius) {
+  border-radius: $radius;
 }
 
 @mixin absolute-shadow($left, $top) {
@@ -16,4 +16,10 @@
     left: $left + $shadow-horizontal;
     top: $top + $shadow-vertical;
   }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

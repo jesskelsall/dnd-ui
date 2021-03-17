@@ -1,4 +1,7 @@
-export const CLASSES = <const>[
+import { arrayToChoices } from '../../functions/arrayToChoices'
+import { Choice } from '../../types/Choice'
+
+export const CLASSES: Choice[] = arrayToChoices([
   'Barbarian',
   'Bard',
   'Cleric',
@@ -11,9 +14,9 @@ export const CLASSES = <const>[
   'Sorcerer',
   'Warlock',
   'Wizard',
-]
+])
 
-export const RACES = <const>[
+export const RACES: Choice[] = arrayToChoices([
   'Aarakocra',
   'Aasimar',
   'Dragonborn',
@@ -37,4 +40,4 @@ export const RACES = <const>[
   'Tiefling',
   'Tortle',
   'Triton',
-]
+])

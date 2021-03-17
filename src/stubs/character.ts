@@ -8,7 +8,7 @@ export const characters: Record<string, Character> = {
       group: 'Canary Squad',
       iconURL: 'https://raw.githubusercontent.com/jesskelsall/astarus/main/images/ranks/astorrel-2-private.png',
       organisation: 'Astorrel',
-      rank: 'Squad Hand',
+      rank: 'Astorrel Squad Hand',
     },
     avatar: {
       gradientColours: GRADIENT_COLOURS[11],

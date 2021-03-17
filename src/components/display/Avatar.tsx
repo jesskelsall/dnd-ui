@@ -14,6 +14,6 @@ export const Avatar = ({
   const background = backgroundGradientColours ? createGradient('radial', backgroundGradientColours) : undefined
 
   return (
-    <img alt="avatar" src={url} style={{ background }} />
+    <img alt="avatar" src={url} style={{ background, height: 100, width: 100 }} />
   )
 }

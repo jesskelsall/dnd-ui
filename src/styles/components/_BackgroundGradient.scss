@@ -1,0 +1,10 @@
+.background-gradient-tile {
+  @include square($bg-size);
+  @include border-radius($bg-border-radius);
+  background-color: $grey;
+  border: 0;
+
+  &.selected {
+    box-shadow: 0 0 0 2px $primary;
+  }
+}

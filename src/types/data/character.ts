@@ -1,6 +1,3 @@
-import { CLASSES, RACES } from '../../consts/choices/dnd'
-import { ORGANISATIONS } from '../../consts/choices/astarus'
-import { PRONOUNS } from '../../consts/choices/pronouns'
 import { GradientColours } from '../Gradient'
 
 export interface Character {
@@ -8,7 +5,7 @@ export interface Character {
     division: string,
     group: string,
     iconURL: string,
-    organisation: typeof ORGANISATIONS[number] | '',
+    organisation: string,
     rank: string,
   },
   avatar: {
@@ -16,12 +13,12 @@ export interface Character {
     smallURL: string,
     largeURL: string,
   },
-  class: typeof CLASSES[number] | '',
+  class: string,
   id: string,
   name: {
     displayName: string,
     realName: string,
   },
-  pronouns: typeof PRONOUNS[number] | '',
-  race: typeof RACES[number] | '',
+  pronouns: string,
+  race: string,
 }

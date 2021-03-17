@@ -41,3 +41,5 @@ export const GRADIENT_COLOURS: GradientColours[] = [
   ['#ffb799', '#deb0aa', '#b3b3b3'],
   ['#d5d5d5', '#fffefe', '#e6e6e6'],
 ]
+
+export const DEFAULT_GRADIENT_COLOURS: GradientColours = GRADIENT_COLOURS[34]

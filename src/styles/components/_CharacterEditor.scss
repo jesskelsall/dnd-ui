@@ -1,0 +1,43 @@
+.character-editor .card-img-flush {
+  position: relative;
+  overflow: hidden;
+  height: $ce-img-height;
+  background-color: $grey;
+
+  .right-images {
+    position: absolute;
+    top: $ce-right-images-margin;
+    right: $ce-right-images-margin;
+    bottom: 0;
+    width: $scc-avatar-size;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .avatar-large {
+    width: $ce-avatar-large;
+  }
+
+  .avatar-small {
+    @include rounded-corners;
+    @include square($scc-avatar-size);
+    overflow: hidden;
+  }
+
+  .organisation-icon-container {
+    @include flex-center;
+    flex: 1;
+  }
+
+  .organisation-icon {
+    @include square($scc-icon-size);
+  }
+}
+
+.character-editor .gradient-colours {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $bg-gap;
+}
