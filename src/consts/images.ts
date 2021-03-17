@@ -2,6 +2,6 @@ export const IMAGES_URL = 'https://raw.githubusercontent.com/jesskelsall/astarus
 
 export const IMAGE_TYPES = {
   ICON: 'ranks',
-  LARGE: 'people/bodies',
-  SMALL: 'people/portraits',
+  LARGE: 'people/portraits',
+  SMALL: 'people/tokens',
 }

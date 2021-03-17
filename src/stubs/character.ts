@@ -1,19 +1,21 @@
 import { GRADIENT_COLOURS } from '../consts/gradientColours'
+import { IMAGE_TYPES } from '../consts/images'
+import { fileNameToUrl } from '../functions/url'
 import { Character } from '../types/data/character'
 
-export const characters: Record<string, Character> = {
+export const charactersStub: Record<string, Character> = {
   ahsha: {
     affiliation: {
       division: 'City / Northhaven',
       group: 'Canary Squad',
-      iconURL: 'https://raw.githubusercontent.com/jesskelsall/astarus/main/images/ranks/astorrel-2-private.png',
+      iconURL: fileNameToUrl(IMAGE_TYPES.ICON, 'astorrel-2-private'),
       organisation: 'Astorrel',
       rank: 'Astorrel Squad Hand',
     },
     avatar: {
       gradientColours: GRADIENT_COLOURS[11],
-      smallURL: 'https://raw.githubusercontent.com/jesskelsall/astarus/main/images/tokens/ahsha-sallas.png',
-      largeURL: '',
+      smallURL: fileNameToUrl(IMAGE_TYPES.SMALL, 'ahsha-sallas'),
+      largeURL: fileNameToUrl(IMAGE_TYPES.LARGE, 'ahsha-sallas'),
     },
     class: 'Fighter',
     id: 'ahsha',

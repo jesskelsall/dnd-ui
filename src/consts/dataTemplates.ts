@@ -1,4 +1,6 @@
+import { Data } from '../types/data'
 import { Character } from '../types/data/character'
+import { DEFAULT_GRADIENT_COLOURS } from './gradientColours'
 
 export const CHARACTER_TEMPLATE: Character = {
   affiliation: {
@@ -9,7 +11,7 @@ export const CHARACTER_TEMPLATE: Character = {
     rank: '',
   },
   avatar: {
-    gradientColours: [],
+    gradientColours: DEFAULT_GRADIENT_COLOURS,
     smallURL: '',
     largeURL: '',
   },
@@ -21,4 +23,8 @@ export const CHARACTER_TEMPLATE: Character = {
   },
   pronouns: '',
   race: '',
+}
+
+export const DATA_TEMPLATE: Data = {
+  characters: {},
 }

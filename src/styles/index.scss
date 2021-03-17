@@ -5,9 +5,12 @@
 
 @import './mixins';
 
-@import './components/form';
+@import './components/App';
 @import './components/BackgroundGradient';
 @import './components/CharacterEditor';
+@import './components/ControlArea';
+@import './components/DisplayArea';
+@import './components/form';
 @import './components/SmallCharacterCard';
 
 body {
