@@ -1,0 +1,22 @@
+.data-page {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .data-page-controls {
+    margin: 0.5rem 0;
+  }
+
+  .data-json {
+    width: 100%;
+    background-color: $gray-200;
+    flex-grow: 1;
+    margin-bottom: 0;
+    padding: 20px;
+    overflow: scroll;
+  }
+
+  .file-import {
+    display: none;
+  }
+}

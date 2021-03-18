@@ -1,7 +1,16 @@
 .navbar {
-  background-color: $blue-100;
-}
+  background-color: $gray;
 
-.navbar-brand {
-  margin-left: 1rem;
+  .navbar-left {
+    margin-left: 1rem;
+  }
+  
+  .navbar-right {
+    align-items: center;
+    margin-right: 1rem;
+  }
+
+  .form-check {
+    height: 1.5rem;
+  }
 }

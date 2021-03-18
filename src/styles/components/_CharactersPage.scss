@@ -1,0 +1,29 @@
+.characters-area {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.characters-list {
+  tr, td {
+    line-height: 2.25;
+  }
+
+  .characters-list-avatar {
+    @include square($cp-avatar-size);
+    @include rounded-corners($border-radius-small);
+    display: block;
+    overflow: hidden;
+  }
+
+  .characters-list-actions {
+    text-align: center;
+    width: $cp-actions-width;
+  }
+
+  .characters-list-actions-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    grid-gap: 0.5rem;
+  }
+}

@@ -1,1 +1,1 @@
-export type Page = 'Characters' | 'Display' | 'Data'
+export type Page = 'characters' | 'data' | 'display' | 'editCharacter'

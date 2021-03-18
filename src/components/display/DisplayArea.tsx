@@ -17,6 +17,7 @@ export const DisplayArea = ({
           url: character.avatar.smallURL,
         }}
         iconURL={character.affiliation.iconURL}
+        key={character.id}
         textPrimary={character.name.realName}
         textSecondary={`${character.race} ${character.class}`}
         textTertiary={character.pronouns}

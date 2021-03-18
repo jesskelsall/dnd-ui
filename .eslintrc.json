@@ -60,6 +60,7 @@
         ]
       }
     ],
+    "react/jsx-fragments": "off",
     "semi": [
       "error",
       "never"

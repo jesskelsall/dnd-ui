@@ -1,4 +1,5 @@
 .display-area {
   @include flex-center;
   flex-direction: column;
+  grid-gap: $card-gap;
 }

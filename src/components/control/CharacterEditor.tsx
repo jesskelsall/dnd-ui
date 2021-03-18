@@ -1,6 +1,5 @@
-import { isEqual } from 'lodash'
 import {
-  flow, get, kebabCase, noop, set,
+  flow, get, isEqual, kebabCase, noop, set,
 } from 'lodash/fp'
 import React, { useState } from 'react'
 import {
@@ -19,24 +18,36 @@ import { TextInputField } from './form/TextInputField'
 
 export interface CharacterEditorProps {
   character: Character,
+  onChangeData?: (character: Character) => void,
   onClose?: () => void,
-  onSave?: (character: Character) => void,
+  realTime: boolean,
 }
 
 export const CharacterEditor = ({
   character,
+  onChangeData = noop,
   onClose = noop,
-  onSave = noop,
+  realTime,
 }: CharacterEditorProps): JSX.Element => {
   const [editingCharacter, setEditingCharacter] = useState(character)
 
-  const saveCharacter = () => onSave(editingCharacter)
+  const characterChangesToApply = !realTime && !isEqual(character, editingCharacter)
 
-  const setPath = (path: string) => (value: string) => setEditingCharacter(
+  const saveCharacter = () => {
+    onChangeData(editingCharacter)
+    onClose()
+  }
+
+  const updateCharacter = (updatedCharacter: Character) => {
+    setEditingCharacter(updatedCharacter)
+    if (realTime) onChangeData(updatedCharacter)
+  }
+
+  const setPath = (path: string) => (value: string) => updateCharacter(
     set(path, value, editingCharacter),
   )
 
-  const setURL = (path: string, folder: string) => (value: string) => setEditingCharacter(
+  const setURL = (path: string, folder: string) => (value: string) => updateCharacter(
     set(path, fileNameToUrl(folder, value), editingCharacter),
   )
 
@@ -55,7 +66,7 @@ export const CharacterEditor = ({
   const onChangeRealName = (value: string) => {
     const namePath = kebabCase(value)
 
-    setEditingCharacter(flow(
+    updateCharacter(flow(
       set('name.realName', value),
       set('avatar.smallURL', fileNameToUrl(IMAGE_TYPES.SMALL, namePath)),
       set('avatar.largeURL', fileNameToUrl(IMAGE_TYPES.LARGE, namePath)),
@@ -65,13 +76,13 @@ export const CharacterEditor = ({
   const onChangeRank = (value: string) => {
     const choice = RANKS.find((rank) => rank.value === value)
 
-    setEditingCharacter(flow(
+    updateCharacter(flow(
       set('affiliation.rank', choice ? choice.value : ''),
       set('affiliation.iconURL', choice ? fileNameToUrl(IMAGE_TYPES.ICON, choice.path) : ''),
     )(editingCharacter))
   }
 
-  const onChangeBackground = (colours: GradientColours) => setEditingCharacter(
+  const onChangeBackground = (colours: GradientColours) => updateCharacter(
     set('avatar.gradientColours', colours, editingCharacter),
   )
 
@@ -205,8 +216,21 @@ export const CharacterEditor = ({
         {/* Footer */}
         <div className="card-footer">
           <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button className="btn btn-outline-primary" onClick={onClose} type="button">Cancel</button>
-            <button className="btn btn-primary" onClick={saveCharacter} type="button">Save</button>
+            {realTime ? (
+              <button className="btn btn-info" onClick={onClose} type="button">Done</button>
+            ) : (
+              <>
+                <button className="btn btn-danger" onClick={onClose} type="button">Cancel</button>
+                <button
+                  className="btn btn-primary"
+                  disabled={!characterChangesToApply}
+                  onClick={saveCharacter}
+                  type="button"
+                >
+                  Save
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

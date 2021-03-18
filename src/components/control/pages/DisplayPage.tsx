@@ -3,5 +3,5 @@ import { DataPropagationProps } from '../../../types/DataPropagation'
 
 export const DisplayPage = ({
   data,
-  onSave,
+  onChangeData,
 }: DataPropagationProps): JSX.Element => <div className="control-area-content">DisplayPage</div>

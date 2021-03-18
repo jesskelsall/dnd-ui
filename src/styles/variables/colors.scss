@@ -1,3 +1,9 @@
-$black: #000;
-$white: #fff;
-$grey: hsl(0, 0, 80);
+$gray: $gray-400;
+
+// Bootstrap colours
+
+$custom-colors: (
+  "info": $orange
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
