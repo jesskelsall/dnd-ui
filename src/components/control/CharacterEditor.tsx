@@ -1,5 +1,5 @@
 import {
-  flow, get, isEqual, kebabCase, noop, set,
+  flow, get, isEqual, set,
 } from 'lodash/fp'
 import React, { useState } from 'react'
 import {
@@ -7,7 +7,7 @@ import {
 } from '../../consts/choices'
 import { GRADIENT_COLOURS } from '../../consts/gradientColours'
 import { IMAGE_TYPES } from '../../consts/images'
-import { fileNameToUrl, urlToFileName } from '../../functions/url'
+import { fileNameToUrl } from '../../functions/url'
 import { Choice } from '../../types/Choice'
 import { Character } from '../../types/data/character'
 import { GradientColours } from '../../types/Gradient'
@@ -18,15 +18,15 @@ import { TextInputField } from './form/TextInputField'
 
 export interface CharacterEditorProps {
   character: Character,
-  onChangeData?: (character: Character) => void,
-  onClose?: () => void,
+  onChangeData: (character: Character) => void,
+  onClose: () => void,
   realTime: boolean,
 }
 
 export const CharacterEditor = ({
   character,
-  onChangeData = noop,
-  onClose = noop,
+  onChangeData,
+  onClose,
   realTime,
 }: CharacterEditorProps): JSX.Element => {
   const [editingCharacter, setEditingCharacter] = useState(character)
@@ -47,10 +47,6 @@ export const CharacterEditor = ({
     set(path, value, editingCharacter),
   )
 
-  const setURL = (path: string, folder: string) => (value: string) => updateCharacter(
-    set(path, fileNameToUrl(folder, value), editingCharacter),
-  )
-
   const renderSimpleDropdown = (path: string, choices: Choice[]) => (
     <DropdownField
       onChange={setPath(path)}
@@ -63,13 +59,11 @@ export const CharacterEditor = ({
     <TextInputField onChange={setPath(path)} value={get(path, editingCharacter)} />
   )
 
-  const onChangeRealName = (value: string) => {
-    const namePath = kebabCase(value)
-
+  const onChangeId = (newId: string) => {
     updateCharacter(flow(
-      set('name.realName', value),
-      set('avatar.smallURL', fileNameToUrl(IMAGE_TYPES.SMALL, namePath)),
-      set('avatar.largeURL', fileNameToUrl(IMAGE_TYPES.LARGE, namePath)),
+      set('id', newId),
+      set('avatar.smallURL', newId ? fileNameToUrl(IMAGE_TYPES.SMALL, newId) : ''),
+      set('avatar.largeURL', newId ? fileNameToUrl(IMAGE_TYPES.LARGE, newId) : ''),
     )(editingCharacter))
   }
 
@@ -128,10 +122,7 @@ export const CharacterEditor = ({
           <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Real Name</label>
             <div className="col">
-              <TextInputField
-                onChange={onChangeRealName}
-                value={get('name.realName', editingCharacter)}
-              />
+              {renderSimpleTextInput('name.realName')}
             </div>
           </div>
           <div className="row mb-3">
@@ -144,6 +135,13 @@ export const CharacterEditor = ({
             <label className="col-sm-2 col-form-label">Pronouns</label>
             <div className="col">
               {renderSimpleDropdown('pronouns', PRONOUNS)}
+            </div>
+            <label className="col-sm-2 col-form-label">ID</label>
+            <div className="col">
+              <TextInputField
+                onChange={onChangeId}
+                value={editingCharacter.id}
+              />
             </div>
           </div>
           <div className="row mb-3">
@@ -166,7 +164,7 @@ export const CharacterEditor = ({
               <DropdownField
                 onChange={onChangeRank}
                 options={[EMPTY_CHOICE, ...RANKS]}
-                value={get('affiliation.rank', editingCharacter)}
+                value={editingCharacter.affiliation.rank}
               />
             </div>
           </div>
@@ -185,17 +183,13 @@ export const CharacterEditor = ({
           <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Small Avatar</label>
             <div className="col">
-              <TextInputField
-                onChange={setURL('avatar.smallURL', IMAGE_TYPES.SMALL)}
-                value={urlToFileName(get('avatar.smallURL', editingCharacter))}
-              />
+              {renderSimpleTextInput('avatar.smallURL')}
             </div>
+          </div>
+          <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Large Avatar</label>
             <div className="col">
-              <TextInputField
-                onChange={setURL('avatar.largeURL', IMAGE_TYPES.LARGE)}
-                value={urlToFileName(get('avatar.largeURL', editingCharacter))}
-              />
+              {renderSimpleTextInput('avatar.largeURL')}
             </div>
           </div>
           <div className="row mb-3">

@@ -22,10 +22,10 @@ export const ControlArea = ({
   realTime,
 }: ControlAreaProps): JSX.Element => {
   const [page, setPage] = useState(DEFAULT_PAGE)
-  const [editingCharacterId, setEditingcharacterId] = useState('')
+  const [editingCharacterId, setEditingCharacterId] = useState('')
 
   const editCharacterNavigation = (characterId: string) => {
-    setEditingcharacterId(characterId)
+    setEditingCharacterId(characterId)
     setPage(characterId ? 'editCharacter' : 'characters')
   }
 
@@ -58,6 +58,7 @@ export const ControlArea = ({
           characterId={editingCharacterId}
           data={data}
           onChangeData={onChangeData}
+          onChangeEditingCharacterId={editCharacterNavigation}
           onFinishEdit={() => editCharacterNavigation('')}
           realTime={realTime}
         />

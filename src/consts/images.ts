@@ -1,7 +1,7 @@
-export const IMAGES_URL = 'https://raw.githubusercontent.com/jesskelsall/astarus/main/images'
+export const IMAGES_URL = 'https://raw.githubusercontent.com/jesskelsall/astarus-images/main'
 
 export const IMAGE_TYPES = {
-  ICON: 'ranks',
+  ICON: 'icons',
   LARGE: 'people/portraits',
   SMALL: 'people/tokens',
 }

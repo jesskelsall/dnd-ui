@@ -1,7 +1,7 @@
 import { set, sortBy, unset } from 'lodash/fp'
-import { nanoid } from 'nanoid'
 import React from 'react'
 import { CHARACTER_TEMPLATE } from '../../../consts/dataTemplates'
+import { randomId } from '../../../functions/random'
 import { Character } from '../../../types/data/character'
 import { DataPropagationProps } from '../../../types/DataPropagation'
 import { CharacterControl } from '../CharacterControl'
@@ -21,7 +21,7 @@ export const CharactersPage = ({
   )
 
   const createCharacter = () => {
-    const characterId = nanoid()
+    const characterId = randomId()
     const character = set('id', characterId, CHARACTER_TEMPLATE)
 
     onChangeData(set(`characters.${characterId}`, character, data))
@@ -30,7 +30,7 @@ export const CharactersPage = ({
 
   const duplicateCharacter = (characterId: string) => {
     const baseCharacter = data.characters[characterId]
-    const newCharacterId = nanoid()
+    const newCharacterId = randomId()
     const newCharacter = set('id', newCharacterId, baseCharacter)
 
     onChangeData(set(`characters.${newCharacterId}`, newCharacter, data))
