@@ -1,8 +1,8 @@
-import { arrayToChoices } from '../../functions/arrayToChoices'
+import { arrayToChoices } from '../../functions/choice'
 import { Choice } from '../../types/Choice'
 
 export const PRONOUNS: Choice[] = arrayToChoices([
-  'he/him',
-  'she/her',
-  'they/them',
+  ['masculine', 'he/him'],
+  ['feminine', 'she/her'],
+  ['nonBinary', 'they/them'],
 ])

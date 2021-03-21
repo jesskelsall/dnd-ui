@@ -5,6 +5,7 @@ export interface SmallCharacterCardProps {
   avatar: AvatarProps,
   iconURL: string,
   textPrimary: string,
+  textPrimaryScale: number,
   textSecondary: string,
   textTertiary: string,
 }
@@ -13,6 +14,7 @@ export const SmallCharacterCard = ({
   avatar,
   iconURL,
   textPrimary,
+  textPrimaryScale,
   textSecondary,
   textTertiary,
 }: SmallCharacterCardProps): JSX.Element => {

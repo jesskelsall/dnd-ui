@@ -1,4 +1,7 @@
 import React from 'react'
+import { RACES } from '../../consts/choices'
+import { choiceName } from '../../functions/choice'
+import { classesToList } from '../../functions/classes'
 import { Character } from '../../types/data/character'
 import { Avatar } from '../display/Avatar'
 
@@ -27,9 +30,9 @@ export const CharacterControl = ({
         )}
       </div>
     </td>
-    <td>{character.name.realName}</td>
-    <td>{character.race}</td>
-    <td>{character.class}</td>
+    <td>{character.names.real.name}</td>
+    <td>{choiceName(character.race, RACES)}</td>
+    <td>{classesToList(character.classes)}</td>
     <td className="characters-list-actions">
       <div className="characters-list-actions-buttons">
         <button className="btn btn-outline-primary" onClick={onEdit} type="button">Edit</button>

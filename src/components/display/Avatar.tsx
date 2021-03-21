@@ -1,5 +1,5 @@
 import React from 'react'
-import { createGradient } from '../../functions/createGradient'
+import { createRadialGradient } from '../../functions/gradient'
 import { GradientColours } from '../../types/Gradient'
 
 export interface AvatarProps {
@@ -13,7 +13,9 @@ export const Avatar = ({
   size = 100,
   url,
 }: AvatarProps): JSX.Element => {
-  const background = backgroundGradientColours ? createGradient('radial', backgroundGradientColours) : undefined
+  const background = backgroundGradientColours
+    ? createRadialGradient(backgroundGradientColours)
+    : undefined
 
   return (
     <img

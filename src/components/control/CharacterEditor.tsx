@@ -5,15 +5,20 @@ import React, { useState } from 'react'
 import {
   CLASSES, EMPTY_CHOICE, ORGANISATIONS, PRONOUNS, RACES, RANKS,
 } from '../../consts/choices'
+import { NAME_SCALES } from '../../consts/choices/display'
 import { GRADIENT_COLOURS } from '../../consts/gradientColours'
 import { IMAGE_TYPES } from '../../consts/images'
+import { classesToListWithLevels, classesToPrimaryClass } from '../../functions/classes'
+import { createLinearGradient } from '../../functions/gradient'
 import { fileNameToUrl } from '../../functions/url'
 import { Choice } from '../../types/Choice'
 import { Character } from '../../types/data/character'
+import { Class } from '../../types/data/class'
 import { GradientColours } from '../../types/Gradient'
 import { Avatar } from '../display/Avatar'
 import { BackgroundGradient } from './form/BackgroundGradient'
 import { DropdownField } from './form/DropdownField'
+import { NumberInputField } from './form/NumberInput'
 import { TextInputField } from './form/TextInputField'
 
 export interface CharacterEditorProps {
@@ -30,6 +35,7 @@ export const CharacterEditor = ({
   realTime,
 }: CharacterEditorProps): JSX.Element => {
   const [editingCharacter, setEditingCharacter] = useState(character)
+  const [selectedClass, setSelectedClass] = useState(classesToPrimaryClass(character.classes))
 
   const characterChangesToApply = !realTime && !isEqual(character, editingCharacter)
 
@@ -58,6 +64,15 @@ export const CharacterEditor = ({
   const renderSimpleTextInput = (path: string) => (
     <TextInputField onChange={setPath(path)} value={get(path, editingCharacter)} />
   )
+
+  const getClassLevel = (): number | string => {
+    if (!selectedClass) return ''
+    return character.classes[selectedClass as Class] || ''
+  }
+
+  const onChangeClassLevel = (level: number) => {
+    updateCharacter(set(`classes.${selectedClass}`, level, editingCharacter))
+  }
 
   const onChangeId = (newId: string) => {
     updateCharacter(flow(
@@ -94,7 +109,7 @@ export const CharacterEditor = ({
         <div
           className="card-img-flush"
           style={{
-            background: `linear-gradient(to bottom, ${gradientColours.slice(0, 2)})`,
+            background: createLinearGradient(gradientColours.slice(0, 2)),
           }}
         >
           {editingCharacter.avatar.largeURL && (
@@ -122,13 +137,21 @@ export const CharacterEditor = ({
           <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Real Name</label>
             <div className="col">
-              {renderSimpleTextInput('name.realName')}
+              {renderSimpleTextInput('names.real.name')}
+            </div>
+            <label className="col-sm-2 col-form-label">Scale</label>
+            <div className="col-sm-2">
+              {renderSimpleDropdown('names.real.scale', NAME_SCALES)}
             </div>
           </div>
           <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Display Name</label>
             <div className="col">
-              {renderSimpleTextInput('name.displayName')}
+              {renderSimpleTextInput('names.display.name')}
+            </div>
+            <label className="col-sm-2 col-form-label">Scale</label>
+            <div className="col-sm-2">
+              {renderSimpleDropdown('names.display.scale', NAME_SCALES)}
             </div>
           </div>
           <div className="row mb-3">
@@ -136,22 +159,33 @@ export const CharacterEditor = ({
             <div className="col">
               {renderSimpleDropdown('pronouns', PRONOUNS)}
             </div>
-            <label className="col-sm-2 col-form-label">ID</label>
-            <div className="col">
-              <TextInputField
-                onChange={onChangeId}
-                value={editingCharacter.id}
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Race</label>
             <div className="col">
               {renderSimpleDropdown('race', RACES)}
             </div>
+          </div>
+          <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Class</label>
             <div className="col">
-              {renderSimpleDropdown('class', CLASSES)}
+              <DropdownField
+                onChange={(changedClass) => setSelectedClass(changedClass)}
+                options={[EMPTY_CHOICE, ...CLASSES]}
+                value={selectedClass}
+              />
+            </div>
+            <label className="col-sm-2 col-form-label">Class Level</label>
+            <div className="col">
+              <NumberInputField
+                disabled={!selectedClass}
+                onChange={onChangeClassLevel}
+                value={getClassLevel()}
+              />
+            </div>
+          </div>
+          <div className="row mb-3">
+            <label className="col-sm-2 col-form-label" />
+            <div className="col class-levels">
+              {classesToListWithLevels(character.classes)}
             </div>
           </div>
           <div className="row mb-3">
@@ -173,11 +207,18 @@ export const CharacterEditor = ({
             <div className="col">
               {renderSimpleTextInput('affiliation.division')}
             </div>
-          </div>
-          <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Group</label>
             <div className="col">
               {renderSimpleTextInput('affiliation.group')}
+            </div>
+          </div>
+          <div className="row mb-3">
+            <label className="col-sm-2 col-form-label">ID</label>
+            <div className="col">
+              <TextInputField
+                onChange={onChangeId}
+                value={editingCharacter.id}
+              />
             </div>
           </div>
           <div className="row mb-3">
@@ -231,3 +272,16 @@ export const CharacterEditor = ({
     </div>
   )
 }
+
+/**
+ * Real Name - Text Size
+ * Display Name - Text Size
+ * Pronouns - Race
+ * Class
+ * Organisation - Rank
+ * Division - Group
+ * ID
+ * Small Avatar
+ * Large Avatar
+ * Background
+ */

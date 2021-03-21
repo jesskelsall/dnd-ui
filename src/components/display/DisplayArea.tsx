@@ -1,4 +1,7 @@
 import React from 'react'
+import { PRONOUNS, RACES } from '../../consts/choices'
+import { choiceName } from '../../functions/choice'
+import { classesToList } from '../../functions/classes'
 import { Data } from '../../types/data'
 import { SmallCharacterCard } from './SmallCharacterCard'
 
@@ -18,9 +21,13 @@ export const DisplayArea = ({
         }}
         iconURL={character.affiliation.iconURL}
         key={character.id}
-        textPrimary={character.name.realName}
-        textSecondary={`${character.race} ${character.class}`}
-        textTertiary={character.pronouns}
+        textPrimary={character.names.real.name}
+        textPrimaryScale={1}
+        textSecondary={[
+          choiceName(character.race, RACES),
+          classesToList(character.classes),
+        ].filter((text) => text).join(' ')}
+        textTertiary={choiceName(character.pronouns, PRONOUNS)}
       />
     ))}
   </div>

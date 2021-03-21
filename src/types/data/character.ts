@@ -1,4 +1,6 @@
 import { GradientColours } from '../Gradient'
+import { Class } from './class'
+import { Name } from './name'
 
 export interface Character {
   affiliation: {
@@ -13,11 +15,11 @@ export interface Character {
     smallURL: string,
     largeURL: string,
   },
-  class: string,
+  classes: Record<Class, number>,
   id: string,
-  name: {
-    displayName: string,
-    realName: string,
+  names: {
+    display: Name,
+    real: Name,
   },
   pronouns: string,
   race: string,

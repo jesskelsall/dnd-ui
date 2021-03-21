@@ -16,7 +16,7 @@ export const CharactersPage = ({
   onStartEdit,
 }: CharactersPageProps): JSX.Element => {
   const characters = sortBy(
-    (character: Character) => character.name.realName.toLowerCase(),
+    (character: Character) => character.names.real.name.toLowerCase(),
     Object.values(data.characters),
   )
 
