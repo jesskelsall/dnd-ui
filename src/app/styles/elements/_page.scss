@@ -1,0 +1,13 @@
+.page {
+  flex-grow: 1;
+  max-height: 100%;
+}
+
+.page-center {
+  @include flex-center;
+  flex-direction: column;
+}
+
+.page-scroll {
+  overflow-y: scroll;
+}

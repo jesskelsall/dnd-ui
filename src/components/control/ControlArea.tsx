@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { DEFAULT_PAGE } from '../../consts/page'
+import { useSelector } from 'react-redux'
+import { DEFAULT_PAGE } from '../../app/consts/page'
+import { selectCharacters, selectPage } from '../../app/selectors'
 import { DataPropagationProps } from '../../types/DataPropagation'
 import { Navbar } from './Navbar'
 import { CharactersPage } from './pages/CharactersPage'
@@ -29,17 +31,21 @@ export const ControlArea = ({
     setPage(characterId ? 'editCharacter' : 'characters')
   }
 
+  // TODO rename
+  const reduxPage = useSelector(selectPage)
+  const characters = useSelector(selectCharacters)
+
   return (
     <div className="area control-area">
       <Navbar
-        activePage={page}
+        // activePage={page}
         dataChangesToApply={dataChangesToApply}
         onApplyData={onApplyData}
         onChangeRealTime={onChangeRealTime}
-        onNavigate={setPage}
+        // onNavigate={setPage}
         realTime={realTime}
       />
-      {page === 'characters' && (
+      {reduxPage.primary === 'characters' && (
         <CharactersPage
           data={data}
           onChangeData={onChangeData}
@@ -47,21 +53,21 @@ export const ControlArea = ({
           realTime={realTime}
         />
       )}
-      {page === 'display' && (
-        <DisplayPage data={data} onChangeData={onChangeData} realTime={realTime} />
-      )}
-      {page === 'data' && (
-        <DataPage data={data} onChangeData={onChangeData} realTime={realTime} />
-      )}
-      {page === 'editCharacter' && editingCharacterId && (
+      {reduxPage.primary === 'characters' && reduxPage.secondary && (
         <EditCharacterPage
-          characterId={editingCharacterId}
+          characterId={reduxPage.secondary}
           data={data}
           onChangeData={onChangeData}
           onChangeEditingCharacterId={editCharacterNavigation}
           onFinishEdit={() => editCharacterNavigation('')}
           realTime={realTime}
         />
+      )}
+      {reduxPage.primary === 'screens' && (
+        <DisplayPage data={data} onChangeData={onChangeData} realTime={realTime} />
+      )}
+      {reduxPage.primary === 'data' && (
+        <DataPage data={data} onChangeData={onChangeData} realTime={realTime} />
       )}
     </div>
   )

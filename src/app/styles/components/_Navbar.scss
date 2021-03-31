@@ -1,0 +1,25 @@
+.navbar {
+  .navbar-left {
+    margin-left: 1rem;
+  }
+  
+  .navbar-right {
+    align-items: center;
+    margin-right: 1rem;
+  }
+
+  .navbar-center {
+    @extend .navbar-left;
+    @extend .navbar-right;
+    flex-grow: 1;
+    justify-content: center;
+  }
+}
+
+.navbar-primary {
+  background-color: $gray;
+}
+
+.navbar-secondary {
+  background-color: $gray-light;
+}

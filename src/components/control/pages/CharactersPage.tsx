@@ -1,8 +1,11 @@
-import { set, sortBy, unset } from 'lodash/fp'
+import { set } from 'lodash/fp'
 import React from 'react'
-import { CHARACTER_TEMPLATE } from '../../../consts/dataTemplates'
-import { randomId } from '../../../functions/random'
-import { Character } from '../../../types/data/character'
+import { useDispatch, useSelector } from 'react-redux'
+import { CHARACTER_TEMPLATE } from '../../../app/consts/dataTemplates'
+import { randomId } from '../../../app/functions/random'
+import { addCharacter, removeCharacter } from '../../../app/reducers'
+import { setPage } from '../../../app/reducers/page'
+import { selectCharacters } from '../../../app/selectors'
 import { DataPropagationProps } from '../../../types/DataPropagation'
 import { CharacterControl } from '../CharacterControl'
 
@@ -15,31 +18,22 @@ export const CharactersPage = ({
   onChangeData,
   onStartEdit,
 }: CharactersPageProps): JSX.Element => {
-  const characters = sortBy(
-    (character: Character) => character.names.real.name.toLowerCase(),
-    Object.values(data.characters),
-  )
+  const characters = useSelector(selectCharacters)
+  const dispatch = useDispatch()
 
-  const createCharacter = () => {
-    const characterId = randomId()
-    const character = set('id', characterId, CHARACTER_TEMPLATE)
+  const onAddCharacter = (baseCharacter = CHARACTER_TEMPLATE) => () => {
+    const id = randomId()
+    const character = set('id', id, baseCharacter)
 
-    onChangeData(set(`characters.${characterId}`, character, data))
-    onStartEdit(characterId)
+    dispatch(addCharacter({ character, id }))
+    dispatch(setPage({ primary: 'characters', secondary: id }))
   }
 
-  const duplicateCharacter = (characterId: string) => {
-    const baseCharacter = data.characters[characterId]
-    const newCharacterId = randomId()
-    const newCharacter = set('id', newCharacterId, baseCharacter)
-
-    onChangeData(set(`characters.${newCharacterId}`, newCharacter, data))
-    onStartEdit(newCharacterId)
+  const onEditCharacter = (id: string) => () => {
+    dispatch(setPage({ primary: 'characters', secondary: id }))
   }
 
-  const deleteCharacter = (characterId: string) => onChangeData(
-    unset(`characters.${characterId}`, data),
-  )
+  const onDeleteCharacter = (characterId: string) => () => dispatch(removeCharacter(characterId))
 
   return (
     <div className="characters-area">
@@ -52,7 +46,7 @@ export const CharactersPage = ({
             <th>Class</th>
             <th className="characters-list-actions">
               <div className="characters-list-actions-buttons">
-                <button className="btn btn-success" onClick={createCharacter} type="button">Create Character</button>
+                <button className="btn btn-success" onClick={onAddCharacter()} type="button">Create Character</button>
               </div>
             </th>
           </tr>
@@ -62,9 +56,9 @@ export const CharactersPage = ({
             <CharacterControl
               character={character}
               key={character.id}
-              onDelete={() => deleteCharacter(character.id)}
-              onDuplicate={() => duplicateCharacter(character.id)}
-              onEdit={() => onStartEdit(character.id)}
+              onDelete={onDeleteCharacter(character.id)}
+              onDuplicate={onAddCharacter(character)}
+              onEdit={onEditCharacter(character.id)}
             />
           ))}
         </tbody>

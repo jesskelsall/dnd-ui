@@ -1,0 +1,12 @@
+.control-area {
+  display: flex;
+  flex-direction: column;
+  max-width: $control-max-width;
+  border-left: 5px solid $gray;
+}
+
+.control-area-content {
+  @include flex-center;
+  flex-direction: column;
+  height: 100%;
+}

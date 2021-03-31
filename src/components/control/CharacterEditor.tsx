@@ -3,19 +3,19 @@ import {
 } from 'lodash/fp'
 import React, { useState } from 'react'
 import {
-  CLASSES, EMPTY_CHOICE, ORGANISATIONS, PRONOUNS, RACES, RANKS,
-} from '../../consts/choices'
-import { NAME_SCALES } from '../../consts/choices/display'
-import { GRADIENT_COLOURS } from '../../consts/gradientColours'
-import { IMAGE_TYPES } from '../../consts/images'
-import { classesToListWithLevels, classesToPrimaryClass } from '../../functions/classes'
-import { createLinearGradient } from '../../functions/gradient'
-import { fileNameToUrl } from '../../functions/url'
-import { Choice } from '../../types/Choice'
-import { Character } from '../../types/data/character'
-import { Class } from '../../types/data/class'
-import { GradientColours } from '../../types/Gradient'
-import { Avatar } from '../display/Avatar'
+  CLASSES, EMPTY_CHOICE, ORGANISATIONS, RANKS,
+} from '../../app/consts/choices'
+import { NAME_SCALES } from '../../app/consts/choices/display'
+import { GRADIENT_COLOURS } from '../../app/consts/gradientColours'
+import { IMAGE_TYPES } from '../../app/consts/images'
+import { classesToListWithLevels, classesToPrimaryClass } from '../../app/functions/classes'
+import { createLinearGradient } from '../../app/functions/gradient'
+import { fileNameToUrl } from '../../app/functions/url'
+import { Choice } from '../../app/types/Choice'
+import { Character } from '../../app/types/Character'
+import { Class } from '../../app/types/Class'
+import { GradientColours } from '../../app/types/Gradient'
+import { Avatar } from '../../app/components/display/Avatar'
 import { BackgroundGradient } from './form/BackgroundGradient'
 import { DropdownField } from './form/DropdownField'
 import { NumberInputField } from './form/NumberInput'
@@ -152,16 +152,6 @@ export const CharacterEditor = ({
             <label className="col-sm-2 col-form-label">Scale</label>
             <div className="col-sm-2">
               {renderSimpleDropdown('names.display.scale', NAME_SCALES)}
-            </div>
-          </div>
-          <div className="row mb-3">
-            <label className="col-sm-2 col-form-label">Pronouns</label>
-            <div className="col">
-              {renderSimpleDropdown('pronouns', PRONOUNS)}
-            </div>
-            <label className="col-sm-2 col-form-label">Race</label>
-            <div className="col">
-              {renderSimpleDropdown('race', RACES)}
             </div>
           </div>
           <div className="row mb-3">

@@ -1,9 +1,9 @@
 import React from 'react'
-import { RACES } from '../../consts/choices'
-import { choiceName } from '../../functions/choice'
-import { classesToList } from '../../functions/classes'
-import { Character } from '../../types/data/character'
-import { Avatar } from '../display/Avatar'
+import { RACES } from '../../app/consts/choices'
+import { choiceName } from '../../app/functions/choice'
+import { classesToList } from '../../app/functions/classes'
+import { Character } from '../../app/types/Character'
+import { Avatar } from '../../app/components/display/Avatar'
 
 export interface CharacterControlProps {
   character: Character,

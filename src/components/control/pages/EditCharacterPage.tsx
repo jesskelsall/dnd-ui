@@ -2,7 +2,7 @@ import {
   flow, get, set, unset,
 } from 'lodash/fp'
 import React from 'react'
-import { Character } from '../../../types/data/character'
+import { Character } from '../../../app/types/Character'
 import { DataPropagationProps } from '../../../types/DataPropagation'
 import { CharacterEditor } from '../CharacterEditor'
 

@@ -3,7 +3,7 @@ import { saveAs } from 'file-saver'
 import { set } from 'lodash/fp'
 import { DateTime } from 'luxon'
 import React, { useState } from 'react'
-import { dataToBlob, dataToJson, fileToString } from '../../../functions/json'
+import { dataToBlob, dataToJson, fileToString } from '../../../app/functions/json'
 import { Data } from '../../../types/data'
 import { DataPropagationProps } from '../../../types/DataPropagation'
 

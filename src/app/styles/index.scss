@@ -1,0 +1,41 @@
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/mixins';
+@import '../../../node_modules/bootstrap/scss/utilities';
+
+@import './variables/colors';
+@import './variables/dimensions';
+
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+
+@import './mixins';
+
+@import './elements/area';
+@import './elements/page';
+
+@import './components/BackgroundGradient';
+@import './components/CardsGridScreen';
+@import './components/CharacterEditor';
+@import './components/CharactersPage';
+@import './components/ControlArea';
+@import './components/DataPage';
+@import './components/DisplayArea';
+@import './components/form';
+@import './components/Navbar';
+@import './components/SmallCharacterCard';
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: $black;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  text-align: left;
+  margin-bottom: 0;
+}
+
+input[type=checkbox] {
+  margin-right: 10px;
+}

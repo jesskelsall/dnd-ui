@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, AvatarProps } from './Avatar'
+import { Avatar, AvatarProps } from '../../app/components/display/Avatar'
 
 export interface SmallCharacterCardProps {
   avatar: AvatarProps,

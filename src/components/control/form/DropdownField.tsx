@@ -1,20 +1,18 @@
 import React from 'react'
-import { Choice } from '../../../types/Choice'
+import { Choice } from '../../../app/types/Choice'
 
-export interface DropdownFieldProps {
-  onChange: (option: string) => void,
-  options: Choice[],
-  value: string,
-}
-
-export const DropdownField = ({
+export const DropdownField = <V extends string = string>({
   onChange,
   options,
   value,
-}: DropdownFieldProps): JSX.Element => (
-  <select className="form-select" onChange={(event) => onChange(event.target.value)} value={value}>
+}: {
+  onChange: (option: V) => void,
+  options: Choice<V>[],
+  value: V,
+}): JSX.Element => (
+  <select className="form-select" onChange={(event) => onChange(event.target.value as V)} value={value}>
     {options.map((choice) => (
-      <option key={choice.value} value={choice.value}>{choice.name}</option>
+      <option key={choice.value} value={choice.value}>{choice.label}</option>
     ))}
   </select>
-)
+  )

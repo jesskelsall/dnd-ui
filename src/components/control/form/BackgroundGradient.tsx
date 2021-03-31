@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React from 'react'
-import { GradientColours } from '../../../types/Gradient'
+import { GradientColours } from '../../../app/types/Gradient'
 
 export interface BackgroundGradientProps {
   onClick: (gradientColours: GradientColours) => void,
