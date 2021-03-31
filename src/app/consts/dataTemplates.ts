@@ -1,8 +1,6 @@
-import { Data } from '../../types/data'
 import { Character } from '../types/Character'
-import { DisplayCharacter } from '../../types/data/displayCharacter'
-import { DEFAULT_GRADIENT_COLOURS } from './gradientColours'
 import { Name } from '../types/Name'
+import { DEFAULT_GRADIENT_COLOURS } from './gradientColours'
 
 export const NAME_TEMPLATE: Name = {
   name: '',
@@ -49,14 +47,8 @@ export const CHARACTER_TEMPLATE: Character = {
   race: '',
 }
 
-export const DATA_TEMPLATE: Data = {
-  characters: {},
-  display: {
-    displayCharacters: {},
-  },
-}
-
-export const DISPLAY_CHARACTER_TEMPLATE: DisplayCharacter = {
+// TODO keep?
+export const DISPLAY_CHARACTER_TEMPLATE = {
   characterId: '',
   id: '',
   lines: {

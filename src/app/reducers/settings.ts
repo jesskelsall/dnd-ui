@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { set } from 'lodash/fp'
-import { DEFAULT_SCREEN } from '../consts/page'
+import { DEFAULT_SCREEN } from '../consts/screen'
 import { ScreenType } from '../types/Screen'
 import { Settings } from '../types/Settings'
 import { setPage } from './page'

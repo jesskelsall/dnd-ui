@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { DEFAULT_SCREEN } from '../consts/page'
+import { DEFAULT_SCREEN } from '../consts/screen'
 import { GenericScreen, Screen } from '../types/Screen'
 
 const initialState: GenericScreen = {
