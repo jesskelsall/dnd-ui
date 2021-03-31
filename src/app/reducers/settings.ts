@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { set } from 'lodash/fp'
+import { setData } from '../actions/data'
 import { DEFAULT_SCREEN } from '../consts/screen'
 import { ScreenType } from '../types/Screen'
 import { Settings } from '../types/Settings'
@@ -18,12 +19,14 @@ export const settingsSlice = createSlice({
     setRealTime: (state, action: PayloadAction<boolean>) => set('realTime', action.payload, state),
   },
   extraReducers: (builder) => {
-    builder.addCase(setPage, (state, action) => {
-      if (action.payload.primary === 'screens' && action.payload.secondary) {
-        return set('activeScreen', action.payload.secondary, state)
-      }
-      return state
-    })
+    builder
+      .addCase(setData, (state, action) => action.payload.settings)
+      .addCase(setPage, (state, action) => {
+        if (action.payload.primary === 'screens' && action.payload.secondary) {
+          return set('activeScreen', action.payload.secondary, state)
+        }
+        return state
+      })
   },
 })
 

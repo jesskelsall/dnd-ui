@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { setData } from '../actions/data'
 import { DEFAULT_SCREEN } from '../consts/screen'
 import { GenericScreen, Screen } from '../types/Screen'
 
@@ -11,6 +12,9 @@ export const screenSlice = createSlice({
   initialState,
   reducers: {
     setScreen: (state, action: PayloadAction<Screen>) => action.payload,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setData, (state, action) => action.payload.screen)
   },
 })
 
