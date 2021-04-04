@@ -1,5 +1,5 @@
 import { orderBy, toPairs } from 'lodash/fp'
-import { CLASSES } from '../consts/choices'
+import { CLASSES } from '../consts/choices/dnd'
 import { CLASS_SEPARATOR } from '../consts/separators'
 import { Class, Classes } from '../types/Class'
 import { choiceName } from './choice'

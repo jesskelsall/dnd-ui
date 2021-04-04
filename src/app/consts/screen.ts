@@ -1,3 +1,3 @@
-import { ScreenType } from '../types/Screen'
+import { Screen } from '../types'
 
-export const DEFAULT_SCREEN: ScreenType = 'cardsGrid'
+export const DEFAULT_SCREEN: Screen = 'cardsGrid'

@@ -1,15 +1,27 @@
+import { orderBy } from 'lodash/fp'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { LINE_TRANSFORMERS } from '../../../consts/line'
-import { selectCharacters } from '../../../selectors'
+import { LINE_TRANSFORMERS } from '../../../consts'
+import { CardsGrid, Characters } from '../../../types'
 import { SmallCharacterCard } from '../SmallCharacterCard'
 
-export const CardsGridScreen = (): JSX.Element => {
-  const characters = useSelector(selectCharacters)
+export interface CardsGridScreenProps {
+  cardsGrid: CardsGrid,
+  characters: Characters
+}
+
+export const CardsGridScreen = ({
+  cardsGrid,
+  characters,
+}: CardsGridScreenProps): JSX.Element => {
+  const sortedCharacters = orderBy(
+    ['affiliation.group', 'names.real.name'],
+    ['desc', 'asc'],
+    characters,
+  )
 
   return (
     <div className="page page-center cards-grid-screen">
-      {characters.map((character) => (
+      {sortedCharacters.map((character) => (
         <SmallCharacterCard
           avatar={{
             backgroundGradientColours: character.avatar.gradientColours,
@@ -18,9 +30,9 @@ export const CardsGridScreen = (): JSX.Element => {
           iconURL={character.affiliation.iconURL}
           key={character.id}
           textPrimaryScale={1}
-          textPrimary={LINE_TRANSFORMERS.displayName(character)}
-          textSecondary={LINE_TRANSFORMERS.playerNameAndPronouns(character)}
-          textTertiary={LINE_TRANSFORMERS.blank(character)}
+          textPrimary={LINE_TRANSFORMERS.realName(character)}
+          textSecondary={LINE_TRANSFORMERS.raceAndClasses(character)}
+          textTertiary={LINE_TRANSFORMERS.pronouns(character)}
         />
       ))}
     </div>

@@ -1,5 +1,7 @@
-export * from './characters'
+import { RootState } from '../store'
+import { Store } from '../types'
+
 export * from './data'
 export * from './page'
-export * from './screen'
-export * from './settings'
+
+export const selectStore = (state: RootState): Store => state

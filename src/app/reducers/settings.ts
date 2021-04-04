@@ -1,35 +1,17 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { set } from 'lodash/fp'
-import { setData } from '../actions/data'
-import { DEFAULT_SCREEN } from '../consts/screen'
-import { ScreenType } from '../types/Screen'
-import { Settings } from '../types/Settings'
-import { setPage } from './page'
+import { createSlice } from '@reduxjs/toolkit'
+import { setStore } from '../actions'
+import { SETTINGS_TEMPLATE } from '../consts'
+import { Settings } from '../types'
 
-const initialState: Settings = {
-  activeScreen: DEFAULT_SCREEN,
-  realTime: true,
-}
+const initialState: Settings = SETTINGS_TEMPLATE
 
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
-  reducers: {
-    setActiveScreen: (state, action: PayloadAction<ScreenType>) => set('activeScreen', action.payload, state),
-    setRealTime: (state, action: PayloadAction<boolean>) => set('realTime', action.payload, state),
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(setData, (state, action) => action.payload.settings)
-      .addCase(setPage, (state, action) => {
-        if (action.payload.primary === 'screens' && action.payload.secondary) {
-          return set('activeScreen', action.payload.secondary, state)
-        }
-        return state
-      })
+    builder.addCase(setStore, (state, action) => action.payload.settings)
   },
 })
 
 export const settingsReducer = settingsSlice.reducer
-
-export const { setActiveScreen, setRealTime } = settingsSlice.actions

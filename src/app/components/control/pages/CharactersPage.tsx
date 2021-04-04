@@ -1,30 +1,28 @@
-import { set } from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CHARACTER_TEMPLATE } from '../../../consts/dataTemplates'
 import { randomId } from '../../../functions/random'
-import { addCharacter, removeCharacter } from '../../../reducers'
-import { setPage } from '../../../reducers/page'
-import { selectCharacters } from '../../../selectors'
+import {
+  createCharacter, deleteCharacter, duplicateCharacter, setEditCharacterPage,
+} from '../../../reducers'
+import { selectCharactersList, selectControlData } from '../../../selectors'
 import { CharacterControl } from '../CharacterControl'
 
 export const CharactersPage = (): JSX.Element => {
-  const characters = useSelector(selectCharacters)
+  const data = useSelector(selectControlData)
+  const characters = selectCharactersList(data)
   const dispatch = useDispatch()
 
-  const onAddCharacter = (baseCharacter = CHARACTER_TEMPLATE) => () => {
+  const onCreateCharacter = () => {
     const id = randomId()
-    const character = set('id', id, baseCharacter)
-
-    dispatch(addCharacter({ character, id }))
-    dispatch(setPage({ primary: 'characters', secondary: id }))
+    dispatch(createCharacter(id))
+    dispatch(setEditCharacterPage(id))
   }
 
-  const onEditCharacter = (id: string) => () => {
-    dispatch(setPage({ primary: 'characters', secondary: id }))
+  const onDuplicateCharacter = (existingId: string) => () => {
+    const newId = randomId()
+    dispatch(duplicateCharacter({ existingId, newId }))
+    dispatch(setEditCharacterPage(newId))
   }
-
-  const onDeleteCharacter = (characterId: string) => () => dispatch(removeCharacter(characterId))
 
   return (
     <div className="page page-scroll">
@@ -37,7 +35,7 @@ export const CharactersPage = (): JSX.Element => {
             <th>Class</th>
             <th className="characters-list-actions">
               <div className="characters-list-actions-buttons">
-                <button className="btn btn-success" onClick={onAddCharacter()} type="button">Create Character</button>
+                <button className="btn btn-success" onClick={onCreateCharacter} type="button">Create Character</button>
               </div>
             </th>
           </tr>
@@ -47,9 +45,9 @@ export const CharactersPage = (): JSX.Element => {
             <CharacterControl
               character={character}
               key={character.id}
-              onDelete={onDeleteCharacter(character.id)}
-              onDuplicate={onAddCharacter(character)}
-              onEdit={onEditCharacter(character.id)}
+              onDelete={() => dispatch(deleteCharacter(character.id))}
+              onDuplicate={onDuplicateCharacter(character.id)}
+              onEdit={() => dispatch(setEditCharacterPage(character.id))}
             />
           ))}
         </tbody>

@@ -3,10 +3,10 @@ import { saveAs } from 'file-saver'
 import { DateTime } from 'luxon'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setData } from '../../../actions/data'
-import { dataToBlob, dataToJson, fileToString } from '../../../functions/json'
-import { selectData } from '../../../selectors'
-import { Data } from '../../../types/Data'
+import { setStore } from '../../../actions'
+import { dataToBlob, dataToJson, fileToString } from '../../../functions'
+import { selectStore } from '../../../selectors'
+import { Store } from '../../../types'
 
 interface Status {
   message: string,
@@ -23,7 +23,7 @@ const FILE_INPUT_ID = 'import-json'
 
 export const DataPage = (): JSX.Element => {
   const [status, setStatus] = useState<Status>(DEFAULT_STATUS)
-  const data = useSelector(selectData)
+  const data = useSelector(selectStore)
   const dispatch = useDispatch()
 
   const showActionStatus = (actionStatus: Status) => {
@@ -37,8 +37,8 @@ export const DataPage = (): JSX.Element => {
     if (files && files.length) {
       fileToString(files[0]).then((json) => {
         try {
-          const importedData = JSON.parse(json) as Data
-          dispatch(setData(importedData))
+          const importedData = JSON.parse(json) as Store
+          dispatch(setStore(importedData))
 
           showActionStatus({ message: 'Imported from JSON.', type: 'success' })
         } catch (error) {

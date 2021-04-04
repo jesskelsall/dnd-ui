@@ -1,17 +1,17 @@
-import { createSelector } from '@reduxjs/toolkit'
-import { keyBy } from 'lodash/fp'
-import { Data } from '../types/Data'
-import { selectCharacters } from './characters'
-import { selectScreen } from './screen'
-import { selectSettings } from './settings'
+import { sortBy } from 'lodash/fp'
+import { RootState } from '../store'
+import {
+  Character, Characters, Data, Screen,
+} from '../types'
 
-export const selectData = createSelector(
-  selectCharacters,
-  selectScreen,
-  selectSettings,
-  (characters, screen, settings): Data => ({
-    characters: keyBy('id', characters),
-    screen,
-    settings,
-  }),
-)
+// Select data from store
+
+export const selectControlData = (state: RootState): Data => state.data.control
+export const selectDisplayData = (state: RootState): Data => state.data.display
+
+// Select values from data
+
+export const selectCharacters = (data: Data): Characters => data.characters
+export const selectCharactersList = (data: Data): Character[] => sortBy('names.real.name', data.characters)
+
+export const selectScreen = (data: Data): Screen => data.screen

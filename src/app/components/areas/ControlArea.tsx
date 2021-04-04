@@ -1,10 +1,8 @@
-import { isEqual } from 'lodash/fp'
+import { noop } from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPage, setRealTime, setScreen } from '../../reducers'
-import {
-  generateScreen, selectActiveScreen, selectPage, selectRealTime, selectScreen,
-} from '../../selectors'
+import { setPage } from '../../reducers'
+import { selectControlData, selectPage, selectScreen } from '../../selectors'
 import { Navbar } from '../control/Navbar'
 import {
   CharactersPage, DataPage, EditCharacterPage, ScreensPage,
@@ -14,34 +12,20 @@ export const ControlArea = (): JSX.Element => {
   const dispatch = useDispatch()
 
   // Navigation
+  const data = useSelector(selectControlData)
   const activePage = useSelector(selectPage)
-  const activeScreen = useSelector(selectActiveScreen)
-
-  // Whether the screen is up to date or not
-  const currentScreen = useSelector(selectScreen)
-  const generatedScreen = useSelector(generateScreen)
-  const realTime = useSelector(selectRealTime)
-  const changesToApply = !isEqual(currentScreen, generatedScreen)
-
-  const applyChanges = () => dispatch(setScreen(generatedScreen))
-
-  const changeRealTime = (newRealTime: boolean) => {
-    dispatch(setRealTime(newRealTime))
-    if (newRealTime) applyChanges()
-  }
-
-  if (realTime && changesToApply) applyChanges()
+  const activeScreen = selectScreen(data)
 
   return (
     <div className="area control-area">
       <Navbar
         activePage={activePage}
         activeScreen={activeScreen}
-        changesToApply={changesToApply}
-        onApplyChanges={applyChanges}
-        onChangeRealTime={changeRealTime}
+        changesToApply={false}
+        onApplyChanges={noop}
+        onChangeRealTime={noop}
         onNavigate={(page) => dispatch(setPage(page))}
-        realTime={realTime}
+        realTime
       />
       {activePage.primary === 'characters' && (
         activePage.secondary ? <EditCharacterPage /> : <CharactersPage />

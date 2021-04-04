@@ -1,8 +1,8 @@
-import { Data } from '../types/Data'
+import { Store } from '../types/Store'
 
-export const dataToJson = (data: Data): string => JSON.stringify(data, null, 2)
+export const dataToJson = (data: Store): string => JSON.stringify(data, null, 2)
 
-export const dataToBlob = (blobData: Data): Blob => new Blob(
+export const dataToBlob = (blobData: Store): Blob => new Blob(
   [dataToJson(blobData)],
   { type: 'text/plain;charset=utf-8' },
 )

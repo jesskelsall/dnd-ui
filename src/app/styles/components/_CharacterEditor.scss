@@ -50,16 +50,3 @@
 .character-editor .details {
   height: calc(100vh - #{$navbar-height * 2} - #{$ce-img-height});
 }
-
-.character-editor .section {
-  @extend .card-body;
-
-  & + .section {
-    border-top: 1px solid $gray;
-  }
-
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-}

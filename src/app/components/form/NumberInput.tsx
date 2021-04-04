@@ -1,13 +1,13 @@
 import React from 'react'
 
 export interface NumberInputProps {
-  disabled: boolean,
+  disabled?: boolean,
   onChange: (value: number) => void,
   value: number | string,
 }
 
 export const NumberInput = ({
-  disabled,
+  disabled = false,
   onChange,
   value,
 }: NumberInputProps): JSX.Element => (

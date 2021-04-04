@@ -17,15 +17,19 @@ export interface Character {
   },
   classes: Record<Class, number>,
   id: string,
+  initiative: {
+    bonus: number,
+    maxHealth: number,
+  },
   names: {
     display: Name,
-    player: Name,
     real: Name,
   },
-  pronouns: {
-    character: string,
-    player: string,
+  player: {
+    name: Name,
+    pronouns: string,
   },
+  pronouns: string,
   race: string,
 }
 

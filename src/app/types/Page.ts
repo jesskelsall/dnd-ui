@@ -1,8 +1,8 @@
-import { ScreenType } from './Screen'
+import { Screen } from './Screen'
 
 export type PrimaryPage = 'characters' | 'screens' | 'data'
 
 export interface Page {
   primary: PrimaryPage,
-  secondary: ScreenType | string | null,
+  secondary: Screen | string | null,
 }

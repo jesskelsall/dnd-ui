@@ -1,5 +1,5 @@
 import { arrayToChoices } from '../../functions/choice'
-import { Choice } from '../../types/Choice'
+import { Choice } from '../../types'
 
 export const NAME_SCALES: Choice[] = arrayToChoices([
   ['1', '1x'],

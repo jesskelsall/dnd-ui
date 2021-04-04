@@ -1,9 +1,17 @@
+import { CardsGrid } from './CardsGrid'
 import { Characters } from './Character'
+import { HeroCard } from './HeroCard'
+import { InitiativeTower } from './InitiativeTower'
 import { Screen } from './Screen'
-import { Settings } from './Settings'
 
 export interface Data {
+  cardsGrid: CardsGrid,
   characters: Characters,
+  heroCard: HeroCard,
+  initiativeTower: InitiativeTower,
   screen: Screen,
-  settings: Settings,
 }
+
+export type DataType = 'control' | 'display'
+
+export type DataSets = Record<DataType, Data>

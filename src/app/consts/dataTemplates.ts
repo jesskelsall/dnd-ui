@@ -1,6 +1,44 @@
-import { Character } from '../types/Character'
-import { Name } from '../types/Name'
+import {
+  CardsGrid, Character, Data, DataSets, HeroCard, InitiativeTower, Name, Page, Settings,
+} from '../types'
 import { DEFAULT_GRADIENT_COLOURS } from './gradientColours'
+import { DEFAULT_SCREEN } from './screen'
+
+export const CARDS_GRID_TEMPLATE: CardsGrid = {
+  cards: {},
+}
+
+export const HERO_CARD_TEMPLATE: HeroCard = {
+  characterId: '',
+}
+
+export const INITIATIVE_TOWER_TEMPLATE: InitiativeTower = {
+  initiative: 0,
+  participants: {},
+  round: 0,
+}
+
+export const DATA_TEMPLATE: Data = {
+  cardsGrid: CARDS_GRID_TEMPLATE,
+  characters: {},
+  heroCard: HERO_CARD_TEMPLATE,
+  initiativeTower: INITIATIVE_TOWER_TEMPLATE,
+  screen: DEFAULT_SCREEN,
+}
+
+export const DATA_SETS_TEMPLATE: DataSets = {
+  control: DATA_TEMPLATE,
+  display: DATA_TEMPLATE,
+}
+
+export const PAGE_TEMPLATE: Page = {
+  primary: 'data',
+  secondary: null,
+}
+
+export const SETTINGS_TEMPLATE: Settings = {
+  realTime: true,
+}
 
 export const NAME_TEMPLATE: Name = {
   name: '',
@@ -35,33 +73,18 @@ export const CHARACTER_TEMPLATE: Character = {
     wizard: 0,
   },
   id: '',
+  initiative: {
+    bonus: 0,
+    maxHealth: 0,
+  },
   names: {
     display: NAME_TEMPLATE,
-    player: NAME_TEMPLATE,
     real: NAME_TEMPLATE,
   },
-  pronouns: {
-    character: '',
-    player: '',
+  player: {
+    name: NAME_TEMPLATE,
+    pronouns: '',
   },
+  pronouns: '',
   race: '',
-}
-
-// TODO keep?
-export const DISPLAY_CHARACTER_TEMPLATE = {
-  characterId: '',
-  id: '',
-  lines: {
-    primary: 'realName',
-    secondary: 'raceAndClasses',
-    tertiary: 'pronouns',
-  },
-  position: {
-    column: 0,
-    row: 0,
-  },
-  show: {
-    avatar: true,
-    card: true,
-  },
 }

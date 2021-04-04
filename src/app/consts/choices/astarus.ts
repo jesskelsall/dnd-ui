@@ -1,5 +1,5 @@
 import { arrayToChoices, arrayToChoicesWithPaths } from '../../functions/choice'
-import { Choice, ChoiceWithPath } from '../../types/Choice'
+import { Choice, ChoiceWithPath } from '../../types'
 
 export const ORGANISATIONS: Choice[] = arrayToChoices([
   ['astornox', 'Astornox'],

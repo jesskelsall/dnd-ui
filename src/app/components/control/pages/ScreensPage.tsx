@@ -2,11 +2,14 @@ import classNames from 'classnames'
 import { startCase } from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPage } from '../../../reducers'
+import { setScreen } from '../../../actions'
 import { selectPage } from '../../../selectors'
-import { ScreenType } from '../../../types/Screen'
+import { Screen } from '../../../types'
+import { CardsGridPage } from './CardsGridPage'
+import { HeroCardPage } from './HeroCardPage'
+import { InitiativeTowerPage } from './InitiativeTowerPage'
 
-const SECONDARY_PAGES: ScreenType[] = [
+const SECONDARY_PAGES: Screen[] = [
   'cardsGrid',
   'heroCard',
   'initiativeTower',
@@ -15,11 +18,6 @@ const SECONDARY_PAGES: ScreenType[] = [
 export const ScreensPage = (): JSX.Element => {
   const activePage = useSelector(selectPage)
   const dispatch = useDispatch()
-
-  const onNavigate = (secondary: ScreenType) => () => dispatch(setPage({
-    primary: 'screens',
-    secondary,
-  }))
 
   return (
     <div className="page">
@@ -35,7 +33,8 @@ export const ScreensPage = (): JSX.Element => {
                   'btn-primary': isActive,
                   'btn-outline-primary': !isActive,
                 })}
-                onClick={onNavigate(secondaryPage)}
+                key={secondaryPage}
+                onClick={() => dispatch(setScreen(secondaryPage))}
                 type="button"
               >
                 {startCase(secondaryPage)}
@@ -46,7 +45,9 @@ export const ScreensPage = (): JSX.Element => {
       </div>
 
       {/* Secondary Pages */}
-
+      {activePage.secondary === 'cardsGrid' && <CardsGridPage />}
+      {activePage.secondary === 'heroCard' && <HeroCardPage />}
+      {activePage.secondary === 'initiativeTower' && <InitiativeTowerPage />}
     </div>
   )
 }

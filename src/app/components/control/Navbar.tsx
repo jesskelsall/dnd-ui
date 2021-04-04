@@ -1,8 +1,7 @@
 import classNames from 'classnames'
 import { startCase } from 'lodash/fp'
 import React from 'react'
-import { Page } from '../../types/Page'
-import { ScreenType } from '../../types/Screen'
+import { Page, Screen } from '../../types'
 
 interface NavbarPage {
   active: (secondary: string | null) => boolean,
@@ -11,7 +10,7 @@ interface NavbarPage {
 
 export interface NavbarProps {
   activePage: Page,
-  activeScreen: ScreenType,
+  activeScreen: Screen,
   changesToApply: boolean,
   onApplyChanges: () => void,
   onChangeRealTime: (realTime: boolean) => void,
@@ -70,14 +69,14 @@ export const Navbar = ({
       </div>
       <div className="navbar-right d-grid gap-2 d-md-flex justify-content-md-end">
         {/* Real time */}
-        <div className="form-check form-switch">
+        {/* <div className="form-check form-switch">
           <input
             className="form-check-input"
             defaultChecked={realTime}
             onChange={() => onChangeRealTime(!realTime)}
             type="checkbox"
           />
-        </div>
+        </div> */}
 
         {/* Apply */}
         {realTime ? (

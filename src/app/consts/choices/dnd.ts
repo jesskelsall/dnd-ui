@@ -1,5 +1,5 @@
 import { arrayToChoices } from '../../functions/choice'
-import { Choice } from '../../types/Choice'
+import { Choice } from '../../types'
 
 export const CLASSES: Choice[] = arrayToChoices([
   ['barbarian', 'Barbarian'],

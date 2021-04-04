@@ -1,6 +1,5 @@
 import { arrayToChoices } from '../../functions/choice'
-import { Choice } from '../../types/Choice'
-import { Line } from '../../types/Line'
+import { Choice, Line } from '../../types'
 import { LINE_SEPARATOR } from '../separators'
 
 const joinWithSeparator = (strings: string[]) => strings.join(LINE_SEPARATOR)

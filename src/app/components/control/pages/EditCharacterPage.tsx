@@ -1,9 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPage } from '../../../reducers'
-import { updateCharacter } from '../../../reducers/charaters'
+import { setEditCharacterPage, setPage, updateCharacter } from '../../../reducers'
 import { selectEditingCharacter } from '../../../selectors'
-import { Character } from '../../../types/Character'
+import { Character } from '../../../types'
 import { CharacterEditor } from '../CharacterEditor'
 
 export const EditCharacterPage = (): JSX.Element | null => {
@@ -12,18 +11,27 @@ export const EditCharacterPage = (): JSX.Element | null => {
 
   if (!character) return null
 
-  const closeEditor = () => dispatch(setPage({ primary: 'characters', secondary: null }))
-
-  const saveCharacter = (editedCharacter: Character) => dispatch(updateCharacter({
-    id: character.id,
-    character: editedCharacter,
+  const onClose = () => dispatch(setPage({
+    primary: 'characters',
+    secondary: null,
   }))
+
+  const onSave = (editedCharacter: Character) => {
+    dispatch(updateCharacter({
+      id: character.id,
+      character: editedCharacter,
+    }))
+
+    if (character.id !== editedCharacter.id) {
+      dispatch(setEditCharacterPage(editedCharacter.id))
+    }
+  }
 
   return (
     <CharacterEditor
       character={character}
-      onClose={closeEditor}
-      onSave={saveCharacter}
+      onClose={onClose}
+      onSave={onSave}
     />
   )
 }

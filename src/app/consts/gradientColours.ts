@@ -1,4 +1,4 @@
-import { GradientColours } from '../types/Gradient'
+import { GradientColours } from '../types'
 
 export const GRADIENT_COLOURS: GradientColours[] = [
   ['#f76133', '#d10000', '#660000'],

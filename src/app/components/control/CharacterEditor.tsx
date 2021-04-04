@@ -1,21 +1,17 @@
 import classNames from 'classnames'
 import {
-  flow, get, isEqual, set, startCase,
+  flow, get, isEqual, set,
 } from 'lodash/fp'
 import React, { useState } from 'react'
 import {
-  CLASSES, EMPTY_CHOICE, ORGANISATIONS, RACES, RANKS,
-} from '../../consts/choices'
-import { NAME_SCALES } from '../../consts/choices/display'
-import { GRADIENT_COLOURS } from '../../consts/gradientColours'
-import { IMAGE_TYPES } from '../../consts/images'
-import { classesToListWithLevels, classesToPrimaryClass } from '../../functions/classes'
-import { createLinearGradient } from '../../functions/gradient'
-import { fileNameToUrl } from '../../functions/url'
-import { Character } from '../../types/Character'
-import { Choice } from '../../types/Choice'
-import { Class } from '../../types/Class'
-import { GradientColours } from '../../types/Gradient'
+  CLASSES, EMPTY_CHOICE, GRADIENT_COLOURS, IMAGE_TYPES, NAME_SCALES, ORGANISATIONS, RACES, RANKS,
+} from '../../consts'
+import {
+  classesToListWithLevels, classesToPrimaryClass, createLinearGradient, fileNameToUrl,
+} from '../../functions'
+import {
+  Character, Choice, Class, GradientColours,
+} from '../../types'
 import { Avatar } from '../display/Avatar'
 import {
   BackgroundGradient, Dropdown, NumberInput, TextInput,
@@ -35,13 +31,6 @@ export const CharacterEditor = ({
   const [editingCharacter, setEditingCharacter] = useState(character)
   const [selectedClass, setSelectedClass] = useState(classesToPrimaryClass(character.classes))
 
-  const [test, setTest] = useState<string[]>(['nonBinary', 'feminine'])
-
-  const onChangeTest = (values: string[]) => {
-    console.info('onChangeTest', { values })
-    setTest(values)
-  }
-
   const characterChangesToApply = !isEqual(character, editingCharacter)
 
   const saveCharacter = () => {
@@ -49,20 +38,24 @@ export const CharacterEditor = ({
     onClose()
   }
 
-  const setPath = (path: string) => (value: string) => setEditingCharacter(
+  const setPath = <V extends unknown>(path: string) => (value: V) => setEditingCharacter(
     set(path, value, editingCharacter),
   )
 
   const renderSimpleDropdown = (path: string, choices: Choice[]) => (
     <Dropdown
-      onChange={setPath(path)}
+      onChange={setPath<string>(path)}
       options={[EMPTY_CHOICE, ...choices]}
       value={get(path, editingCharacter)}
     />
   )
 
+  const renderSimpleNumberInput = (path: string) => (
+    <NumberInput onChange={setPath<number>(path)} value={get(path, editingCharacter)} />
+  )
+
   const renderSimpleTextInput = (path: string) => (
-    <TextInput onChange={setPath(path)} value={get(path, editingCharacter)} />
+    <TextInput onChange={setPath<string>(path)} value={get(path, editingCharacter)} />
   )
 
   const getClassLevel = (): number | string => {
@@ -95,21 +88,18 @@ export const CharacterEditor = ({
     set('avatar.gradientColours', colours, editingCharacter),
   )
 
-  const renderNameFields = (namePath: string): JSX.Element => {
-    const nameLabel = `${startCase(namePath)} Name`
-    return (
-      <div className="row mb-3">
-        <label className="col-sm-2 col-form-label">{nameLabel}</label>
-        <div className="col">
-          {renderSimpleTextInput(`names.${namePath}.name`)}
-        </div>
-        <label className="col-sm-2 col-form-label">Scale</label>
-        <div className="col-sm-2">
-          {renderSimpleDropdown(`names.${namePath}.scale`, NAME_SCALES)}
-        </div>
+  const renderNameFields = (namePath: string, fieldName: string): JSX.Element => (
+    <div className="row mb-3">
+      <label className="col-sm-2 col-form-label">{fieldName}</label>
+      <div className="col">
+        {renderSimpleTextInput(`${namePath}.name`)}
       </div>
-    )
-  }
+      <label className="col-sm-2 col-form-label">Scale</label>
+      <div className="col-sm-2">
+        {renderSimpleDropdown(`${namePath}.scale`, NAME_SCALES)}
+      </div>
+    </div>
+  )
 
   const { gradientColours } = editingCharacter.avatar
 
@@ -177,12 +167,12 @@ export const CharacterEditor = ({
       <div className="page page-scroll details">
         <div className="section">
           <h1>Character</h1>
-          {renderNameFields('real')}
-          {renderNameFields('display')}
+          {renderNameFields('names.real', 'Real Name')}
+          {renderNameFields('names.display', 'Display Name')}
           <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Pronouns</label>
             <div className="col">
-              {renderSimpleTextInput('pronouns.character')}
+              {renderSimpleTextInput('pronouns')}
             </div>
             <label className="col-sm-2 col-form-label">Race</label>
             <div className="col">
@@ -211,6 +201,16 @@ export const CharacterEditor = ({
             <label className="col-sm-2 col-form-label" />
             <div className="col class-levels">
               {classesToListWithLevels(editingCharacter.classes)}
+            </div>
+          </div>
+          <div className="row mb-3">
+            <label className="col-sm-2 col-form-label">Hit Points</label>
+            <div className="col">
+              {renderSimpleNumberInput('initiative.maxHealth')}
+            </div>
+            <label className="col-sm-2 col-form-label">Initiative Bonus</label>
+            <div className="col">
+              {renderSimpleNumberInput('initiative.bonus')}
             </div>
           </div>
         </div>
@@ -283,11 +283,11 @@ export const CharacterEditor = ({
 
         <div className="section">
           <h1>Player</h1>
-          {renderNameFields('player')}
+          {renderNameFields('player.name', 'Player Name')}
           <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Pronouns</label>
             <div className="col">
-              {renderSimpleTextInput('pronouns.player')}
+              {renderSimpleTextInput('player.pronouns')}
             </div>
           </div>
         </div>
