@@ -1,0 +1,109 @@
+// Variables
+
+$pc-avatar-size: 60px;
+$pc-text-size: 26px;
+$pc-initiative-size: 22px;
+$pc-text-padding: 10px;
+
+@function pc-width-padding($width) {
+  @return $width + ($pc-text-padding * 2);
+}
+
+$pc-initiative-width: $pc-avatar-size;
+$pc-avatar-width: $pc-avatar-size;
+$pc-text-width: name-width($pc-text-size);
+
+$pc-box-height: $pc-avatar-size;
+$pc-box-width: pc-width-padding($pc-initiative-width) + $pc-avatar-width + pc-width-padding($pc-text-width);
+
+$pc-height: $pc-box-height + $shadow-vertical;
+$pc-width: $pc-box-width + $shadow-horizontal;
+
+// Styles
+
+.participant-card {
+  position: relative;
+  height: $pc-height;
+  width: $pc-width;
+
+  --name-scale: 1;
+}
+
+.participant-card__box {
+  @include rounded-corners;
+  @include absolute-shadow(0, 0);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: $pc-box-width;
+  height: $pc-box-height;
+  background-color: $gray;
+
+  &.no-initiative {
+    @include absolute-shadow($pc-initiative-width, 0);
+    width: $pc-box-width - $pc-initiative-width;
+    left: $pc-initiative-width;
+
+    .participant-card__avatar {
+      border-bottom-left-radius: $border-radius-large;
+      border-top-left-radius: $border-radius-large;
+    }
+  }
+
+  &.turn-active {
+    background-color: $success;
+    color: $white;
+  }
+
+  &.turn-next-player {
+    background-color: $warning;
+  }
+
+  h1, h2 {
+    height: $pc-box-height;
+    padding: 0 $pc-text-padding;
+    line-height: $pc-box-height;
+    overflow: hidden;
+  }
+
+  h1 {
+    flex: 1;
+    width: $pc-text-width;
+    font-size: calc(#{$pc-text-size} * var(--name-scale));
+    font-weight: bold;
+  }
+
+  h2 {
+    width: $pc-initiative-width;
+    font-size: $pc-initiative-size;
+    text-align: center;
+    opacity: 0.7;
+  }
+}
+
+.participant-card__avatar {
+  @include square($pc-avatar-size);
+  overflow: hidden;
+  background-color: rgba($black, 0.2);
+
+  &.status-wounded,
+  &.status-unconscious {
+    &::after {
+      @include square($pc-avatar-size);
+      position: absolute;
+      margin-left: -$pc-avatar-size;
+      background: linear-gradient(transparent 20%, red 80%);
+      opacity: 0.5;
+      content: '';
+    }
+  }
+
+  &.status-unconscious img,
+  &.status-dead img {
+    background: $black !important;
+  }
+
+  &.status-dead img {
+    filter: grayscale(1);
+  }
+}

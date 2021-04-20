@@ -1,7 +1,17 @@
+export type ParticipantStatus = 'healthy' | 'wounded' | 'unconscious' | 'dead'
+
+export type ParticipantTurn = 'inactive' | 'nextPlayer' | 'active'
+
 export interface InitiativeParticipant {
   characterId: string,
+  health: {
+    current: number,
+    maxOverride: number | null,
+    temp: number | null,
+  },
   id: string,
   initiative: number,
+  quantity: number,
   show: {
     details: boolean,
     quantity: boolean,
@@ -9,15 +19,18 @@ export interface InitiativeParticipant {
   },
   status: {
     dead: boolean,
-    health: number,
     unconscious: boolean,
   },
 }
 
 export type InitiativeParticipants = Record<string, InitiativeParticipant>
 
-export interface InitiativeTower {
+export interface Turn {
   initiative: number,
-  participants: InitiativeParticipants,
   round: number,
+}
+
+export interface InitiativeTower {
+  participants: InitiativeParticipants,
+  turn: Turn,
 }

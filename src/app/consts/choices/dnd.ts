@@ -25,6 +25,7 @@ export const RACES: Choice[] = arrayToChoices([
   ['firbolg', 'Firbolg'],
   ['genasi', 'Genasi'],
   ['gnome', 'Gnome'],
+  ['goblin', 'Goblin'],
   ['goliath', 'Goliath'],
   ['halfElf', 'Half-elf'],
   ['halfOrc', 'Half-orc'],

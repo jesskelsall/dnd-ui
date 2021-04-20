@@ -1,5 +1,14 @@
 import {
-  CardsGrid, Character, Data, DataSets, HeroCard, InitiativeTower, Name, Page, Settings,
+  CardsGrid,
+  Character,
+  Data,
+  DataSets,
+  HeroCard,
+  InitiativeParticipant,
+  InitiativeTower,
+  Name,
+  Page,
+  Turn,
 } from '../types'
 import { DEFAULT_GRADIENT_COLOURS } from './gradientColours'
 import { DEFAULT_SCREEN } from './screen'
@@ -12,23 +21,30 @@ export const HERO_CARD_TEMPLATE: HeroCard = {
   characterId: '',
 }
 
-export const INITIATIVE_TOWER_TEMPLATE: InitiativeTower = {
+export const INITIATIVE_PARTICIPANT_TEMPLATE: InitiativeParticipant = {
+  characterId: '',
+  health: {
+    current: 0,
+    maxOverride: null,
+    temp: null,
+  },
+  id: '',
   initiative: 0,
-  participants: {},
-  round: 0,
+  quantity: 1,
+  show: {
+    details: true,
+    quantity: true,
+    status: true,
+  },
+  status: {
+    dead: false,
+    unconscious: false,
+  },
 }
 
-export const DATA_TEMPLATE: Data = {
-  cardsGrid: CARDS_GRID_TEMPLATE,
-  characters: {},
-  heroCard: HERO_CARD_TEMPLATE,
-  initiativeTower: INITIATIVE_TOWER_TEMPLATE,
-  screen: DEFAULT_SCREEN,
-}
-
-export const DATA_SETS_TEMPLATE: DataSets = {
-  control: DATA_TEMPLATE,
-  display: DATA_TEMPLATE,
+export const NAME_TEMPLATE: Name = {
+  name: '',
+  scale: 1,
 }
 
 export const PAGE_TEMPLATE: Page = {
@@ -36,14 +52,12 @@ export const PAGE_TEMPLATE: Page = {
   secondary: null,
 }
 
-export const SETTINGS_TEMPLATE: Settings = {
-  realTime: true,
+export const TURN_TEMPLATE: Turn = {
+  initiative: 0,
+  round: 0,
 }
 
-export const NAME_TEMPLATE: Name = {
-  name: '',
-  scale: '1',
-}
+// Composite templates
 
 export const CHARACTER_TEMPLATE: Character = {
   affiliation: {
@@ -87,4 +101,23 @@ export const CHARACTER_TEMPLATE: Character = {
   },
   pronouns: '',
   race: '',
+}
+
+export const INITIATIVE_TOWER_TEMPLATE: InitiativeTower = {
+  participants: {},
+  turn: TURN_TEMPLATE,
+}
+
+export const DATA_TEMPLATE: Data = {
+  cardsGrid: CARDS_GRID_TEMPLATE,
+  characters: {},
+  heroCard: HERO_CARD_TEMPLATE,
+  initiativeTower: INITIATIVE_TOWER_TEMPLATE,
+  screen: DEFAULT_SCREEN,
+}
+
+export const DATA_SETS_TEMPLATE: DataSets = {
+  control: DATA_TEMPLATE,
+  display: DATA_TEMPLATE,
+  realTime: true,
 }

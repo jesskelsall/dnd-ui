@@ -1,0 +1,11 @@
+$itp-participant-gap: 16px;
+
+.initiative-tower .participants {
+  height: calc(100vh - #{$navbar-height * 3});
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $itp-participant-gap;
+  }
+}

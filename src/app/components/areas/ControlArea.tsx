@@ -1,8 +1,11 @@
 import { noop } from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPage } from '../../reducers'
-import { selectControlData, selectPage, selectScreen } from '../../selectors'
+import { setPage, setRealTime } from '../../reducers'
+import {
+  selectChangesToApply,
+  selectControlData, selectPage, selectRealTime, selectScreen,
+} from '../../selectors'
 import { Navbar } from '../control/Navbar'
 import {
   CharactersPage, DataPage, EditCharacterPage, ScreensPage,
@@ -16,16 +19,20 @@ export const ControlArea = (): JSX.Element => {
   const activePage = useSelector(selectPage)
   const activeScreen = selectScreen(data)
 
+  // Real time
+  const realTime = useSelector(selectRealTime)
+  const changesToApply = useSelector(selectChangesToApply)
+
   return (
     <div className="area control-area">
       <Navbar
         activePage={activePage}
         activeScreen={activeScreen}
-        changesToApply={false}
+        changesToApply={changesToApply}
         onApplyChanges={noop}
-        onChangeRealTime={noop}
+        onChangeRealTime={() => dispatch(setRealTime(!realTime))}
         onNavigate={(page) => dispatch(setPage(page))}
-        realTime
+        realTime={realTime}
       />
       {activePage.primary === 'characters' && (
         activePage.secondary ? <EditCharacterPage /> : <CharactersPage />

@@ -14,4 +14,8 @@ export interface Data {
 
 export type DataType = 'control' | 'display'
 
-export type DataSets = Record<DataType, Data>
+export type DataSets = {
+  control: Data,
+  display: Data,
+  realTime: boolean,
+}

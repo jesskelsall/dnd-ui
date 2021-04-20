@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { dataReducer, pageReducer, settingsReducer } from './reducers'
+import { dataReducer, pageReducer } from './reducers'
 
 export const store = configureStore({
   reducer: {
     data: dataReducer,
     page: pageReducer,
-    settings: settingsReducer,
   },
 })
 

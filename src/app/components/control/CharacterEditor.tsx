@@ -10,7 +10,7 @@ import {
   classesToListWithLevels, classesToPrimaryClass, createLinearGradient, fileNameToUrl,
 } from '../../functions'
 import {
-  Character, Choice, Class, GradientColours,
+  Character, Choice, ChoiceValue, Class, GradientColours,
 } from '../../types'
 import { Avatar } from '../display/Avatar'
 import {
@@ -42,13 +42,16 @@ export const CharacterEditor = ({
     set(path, value, editingCharacter),
   )
 
-  const renderSimpleDropdown = (path: string, choices: Choice[]) => (
+  const renderSimpleDropdown = <V extends ChoiceValue = string>(
+    path: string,
+    choices: Choice<V>[],
+  ) => (
     <Dropdown
-      onChange={setPath<string>(path)}
-      options={[EMPTY_CHOICE, ...choices]}
+      onChange={setPath<V>(path)}
+      options={choices}
       value={get(path, editingCharacter)}
     />
-  )
+    )
 
   const renderSimpleNumberInput = (path: string) => (
     <NumberInput onChange={setPath<number>(path)} value={get(path, editingCharacter)} />
@@ -96,7 +99,7 @@ export const CharacterEditor = ({
       </div>
       <label className="col-sm-2 col-form-label">Scale</label>
       <div className="col-sm-2">
-        {renderSimpleDropdown(`${namePath}.scale`, NAME_SCALES)}
+        {renderSimpleDropdown<number>(`${namePath}.scale`, NAME_SCALES)}
       </div>
     </div>
   )
@@ -176,7 +179,7 @@ export const CharacterEditor = ({
             </div>
             <label className="col-sm-2 col-form-label">Race</label>
             <div className="col">
-              {renderSimpleDropdown('race', RACES)}
+              {renderSimpleDropdown('race', [EMPTY_CHOICE, ...RACES])}
             </div>
           </div>
           <div className="row mb-3">
@@ -220,7 +223,7 @@ export const CharacterEditor = ({
           <div className="row mb-3">
             <label className="col-sm-2 col-form-label">Organisation</label>
             <div className="col">
-              {renderSimpleDropdown('affiliation.organisation', ORGANISATIONS)}
+              {renderSimpleDropdown('affiliation.organisation', [EMPTY_CHOICE, ...ORGANISATIONS])}
             </div>
             <label className="col-sm-2 col-form-label">Rank</label>
             <div className="col">

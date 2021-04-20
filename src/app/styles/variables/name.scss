@@ -1,0 +1,7 @@
+@use "sass:math";
+
+$name-ratio: 410px / 28px;
+
+@function name-width($font-size) {
+  @return ceil(($font-size * $name-ratio) / 10) * 10;
+}

@@ -5,6 +5,7 @@
 
 @import './variables/colors';
 @import './variables/dimensions';
+@import './variables/name';
 
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
@@ -22,7 +23,9 @@
 @import './components/DataPage';
 @import './components/DisplayArea';
 @import './components/form';
+@import './components/InitiativeTowerPage';
 @import './components/Navbar';
+@import './components/ParticipantCard';
 @import './components/SmallCharacterCard';
 
 body {

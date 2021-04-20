@@ -13,7 +13,7 @@ export interface NavbarProps {
   activeScreen: Screen,
   changesToApply: boolean,
   onApplyChanges: () => void,
-  onChangeRealTime: (realTime: boolean) => void,
+  onChangeRealTime: () => void,
   onNavigate: (page: Page) => void,
   realTime: boolean,
 }
@@ -69,14 +69,14 @@ export const Navbar = ({
       </div>
       <div className="navbar-right d-grid gap-2 d-md-flex justify-content-md-end">
         {/* Real time */}
-        {/* <div className="form-check form-switch">
+        <div className="form-check form-switch">
           <input
             className="form-check-input"
             defaultChecked={realTime}
-            onChange={() => onChangeRealTime(!realTime)}
+            onChange={() => onChangeRealTime()}
             type="checkbox"
           />
-        </div> */}
+        </div>
 
         {/* Apply */}
         {realTime ? (

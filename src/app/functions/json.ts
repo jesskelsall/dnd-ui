@@ -12,7 +12,6 @@ export const fileToString = (file: File): Promise<string> => {
 
   return new Promise((resolve) => {
     fileReader.onload = () => {
-      console.info('onload')
       resolve(fileReader.result as string)
     }
 

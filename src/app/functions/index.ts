@@ -1,6 +1,7 @@
 export * from './choice'
 export * from './classes'
 export * from './gradient'
+export * from './initiative'
 export * from './json'
 export * from './line'
 export * from './lodash'
