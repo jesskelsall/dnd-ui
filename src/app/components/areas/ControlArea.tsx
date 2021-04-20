@@ -1,7 +1,6 @@
-import { noop } from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPage, setRealTime } from '../../reducers'
+import { applyChanges, setPage, setRealTime } from '../../reducers'
 import {
   selectChangesToApply,
   selectControlData, selectPage, selectRealTime, selectScreen,
@@ -29,7 +28,7 @@ export const ControlArea = (): JSX.Element => {
         activePage={activePage}
         activeScreen={activeScreen}
         changesToApply={changesToApply}
-        onApplyChanges={noop}
+        onApplyChanges={() => dispatch(applyChanges())}
         onChangeRealTime={() => dispatch(setRealTime(!realTime))}
         onNavigate={(page) => dispatch(setPage(page))}
         realTime={realTime}

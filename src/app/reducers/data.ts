@@ -101,6 +101,8 @@ export const dataSlice = createSlice({
 
     // REAL TIME
 
+    applyChanges: (state) => set('display', state.control, state),
+
     setRealTime: (state, action: PayloadAction<boolean>) => set('realTime', action.payload, state),
   },
   extraReducers: (builder) => {
@@ -115,6 +117,7 @@ export const dataSlice = createSlice({
 export const dataReducer = dataSlice.reducer
 
 export const {
+  applyChanges,
   advanceTurn,
   createCharacter,
   createParticipant,
