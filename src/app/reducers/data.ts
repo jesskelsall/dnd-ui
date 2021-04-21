@@ -61,6 +61,15 @@ export const dataSlice = createSlice({
       state,
     ),
 
+    // HERO CARD
+
+    // Sets the ID of the character to be displayed on the hero card
+    setHeroCharacterId: (state, action: PayloadAction<string>) => set(
+      'control.heroCard.characterId',
+      action.payload,
+      state,
+    ),
+
     // INITIATIVE
 
     // Advances the initiative to the next participant in order
@@ -125,6 +134,7 @@ export const {
   deleteParticipant,
   duplicateCharacter,
   resetInitiativeTower,
+  setHeroCharacterId,
   setRealTime,
   updateCharacter,
   updateParticipant,

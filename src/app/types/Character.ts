@@ -1,21 +1,28 @@
+import { Classes } from './Class'
 import { GradientColours } from './Gradient'
-import { Class } from './Class'
 import { Name } from './Name'
 
+export interface Affiliation {
+  division: string,
+  group: string,
+  iconURL: string,
+  organisation: string,
+  rank: string,
+}
+
+export interface Player {
+  name: Name,
+  pronouns: string,
+}
+
 export interface Character {
-  affiliation: {
-    division: string,
-    group: string,
-    iconURL: string,
-    organisation: string,
-    rank: string,
-  },
+  affiliation: Affiliation,
   avatar: {
     gradientColours: GradientColours,
     smallURL: string,
     largeURL: string,
   },
-  classes: Record<Class, number>,
+  classes: Classes,
   id: string,
   initiative: {
     bonus: number,
@@ -25,10 +32,7 @@ export interface Character {
     display: Name,
     real: Name,
   },
-  player: {
-    name: Name,
-    pronouns: string,
-  },
+  player: Player,
   pronouns: string,
   race: string,
 }

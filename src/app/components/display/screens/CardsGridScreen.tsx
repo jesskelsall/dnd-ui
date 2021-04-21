@@ -20,21 +20,23 @@ export const CardsGridScreen = ({
   )
 
   return (
-    <div className="page page-center cards-grid-screen">
-      {sortedCharacters.map((character) => (
-        <SmallCharacterCard
-          avatar={{
-            backgroundGradientColours: character.avatar.gradientColours,
-            url: character.avatar.smallURL,
-          }}
-          iconURL={character.affiliation.iconURL}
-          key={character.id}
-          textPrimaryScale={1}
-          textPrimary={LINE_TRANSFORMERS.realName(character)}
-          textSecondary={LINE_TRANSFORMERS.raceAndClasses(character)}
-          textTertiary={LINE_TRANSFORMERS.pronouns(character)}
-        />
-      ))}
+    <div className="page cards-grid-screen">
+      <div className="cards-grid-column">
+        {sortedCharacters.map((character) => (
+          <SmallCharacterCard
+            avatar={{
+              backgroundGradientColours: character.avatar.gradientColours,
+              url: character.avatar.smallURL,
+            }}
+            iconURL={character.affiliation.iconURL}
+            key={character.id}
+            textPrimaryScale={1}
+            textPrimary={LINE_TRANSFORMERS.realName(character)}
+            textSecondary={LINE_TRANSFORMERS.raceAndClasses(character)}
+            textTertiary={LINE_TRANSFORMERS.pronouns(character)}
+          />
+        ))}
+      </div>
     </div>
   )
 }

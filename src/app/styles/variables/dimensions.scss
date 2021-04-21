@@ -1,3 +1,9 @@
+$card-text-padding: 10px;
+
+@function card-width-padding($width) {
+  @return $width + ($card-text-padding * 2);
+}
+
 // Display
 
 $border-radius-small: 4px;
@@ -5,6 +11,7 @@ $border-radius-large: 10px;
 $shadow-horizontal: 10px;
 $shadow-vertical: 10px;
 $card-gap: 10px;
+$column-gap: $card-gap * 2;
 
 // Control
 

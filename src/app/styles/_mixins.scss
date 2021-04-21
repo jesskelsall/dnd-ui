@@ -23,3 +23,10 @@
   align-items: center;
   justify-content: center;
 }
+
+@mixin flex-right-center {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin: $card-gap;
+}

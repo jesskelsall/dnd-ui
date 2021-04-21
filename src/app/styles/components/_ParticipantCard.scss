@@ -3,18 +3,13 @@
 $pc-avatar-size: 60px;
 $pc-text-size: 26px;
 $pc-initiative-size: 22px;
-$pc-text-padding: 10px;
-
-@function pc-width-padding($width) {
-  @return $width + ($pc-text-padding * 2);
-}
 
 $pc-initiative-width: $pc-avatar-size;
 $pc-avatar-width: $pc-avatar-size;
 $pc-text-width: name-width($pc-text-size);
 
 $pc-box-height: $pc-avatar-size;
-$pc-box-width: pc-width-padding($pc-initiative-width) + $pc-avatar-width + pc-width-padding($pc-text-width);
+$pc-box-width: card-width-padding($pc-initiative-width) + $pc-avatar-width + card-width-padding($pc-text-width);
 
 $pc-height: $pc-box-height + $shadow-vertical;
 $pc-width: $pc-box-width + $shadow-horizontal;
@@ -61,7 +56,7 @@ $pc-width: $pc-box-width + $shadow-horizontal;
 
   h1, h2 {
     height: $pc-box-height;
-    padding: 0 $pc-text-padding;
+    padding: 0 $card-text-padding;
     line-height: $pc-box-height;
     overflow: hidden;
   }

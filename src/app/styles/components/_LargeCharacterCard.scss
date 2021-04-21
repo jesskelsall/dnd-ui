@@ -1,0 +1,77 @@
+// Variables
+
+$lcc-avatar-ratio: 1200px / 2048px;
+$lcc-avatar-height: 600px;
+$lcc-avatar-width: $lcc-avatar-height * $lcc-avatar-ratio;
+
+$lcc-box-left: $shadow-horizontal * 2;
+
+$lcc-content-width: name-width(28px);
+$lcc-content-left: $lcc-avatar-width - $lcc-box-left + $card-text-padding;
+$lcc-content-gap: $card-text-padding * 4;
+$lcc-content-avatar-gap: $card-text-padding * 2;
+
+$lcc-box-top: $shadow-vertical * 2;
+$lcc-box-height: $lcc-avatar-height;
+$lcc-box-width: $lcc-content-left + $lcc-content-width + $card-text-padding;
+
+$lcc-height: $lcc-box-top + $lcc-box-height + $shadow-vertical;
+$lcc-width: $lcc-box-left + $lcc-box-width + $shadow-horizontal;
+
+// Styles
+
+.character-card-large {
+  position: relative;
+  height: $lcc-height;
+  width: $lcc-width;
+}
+
+.character-card-large__avatar {
+  @include rounded-corners;
+  @include absolute-shadow(0, 0);
+  position: absolute;
+  height: $lcc-avatar-height;
+  width: $lcc-avatar-width;
+  overflow: hidden;
+}
+
+.character-card-large__box {
+  @include rounded-corners;
+  @include absolute-shadow($lcc-box-left, $lcc-box-top);
+  position: absolute;
+  height: $lcc-box-height;
+  width: $lcc-box-width;
+  background-color: $gray;
+}
+
+.character-card-large__text {
+  width: name-width(28px);
+  margin-left: $lcc-content-left;
+  margin-top: $card-text-padding * 2;
+  height: 200px;
+
+  .character-card-large__icon {
+    margin-top: $lcc-content-avatar-gap;
+  }
+
+  .grouping {
+    margin-bottom: $lcc-content-gap;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: calc(28px * var(--name-scale));
+    line-height: 34px;
+  }
+
+  h2 {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  h3 {
+    font-size: 24px;
+    line-height: 28px;
+    opacity: 0.7;
+  }
+}

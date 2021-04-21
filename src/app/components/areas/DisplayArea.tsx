@@ -12,9 +12,17 @@ export const DisplayArea = (): JSX.Element => {
   return (
     <div className="area display-area">
       {screen === 'cardsGrid' && (
-        <CardsGridScreen cardsGrid={data.cardsGrid} characters={data.characters} />
+        <CardsGridScreen
+          cardsGrid={data.cardsGrid}
+          characters={data.characters}
+        />
       )}
-      {screen === 'heroCard' && <HeroCardScreen />}
+      {screen === 'heroCard' && (
+        <HeroCardScreen
+          characters={data.characters}
+          heroCard={data.heroCard}
+        />
+      )}
       {screen === 'initiativeTower' && <InitiativeTowerScreen />}
     </div>
   )

@@ -3,7 +3,7 @@ import { isEqual, orderBy, sortBy } from 'lodash/fp'
 import { nextTurn } from '../functions'
 import { RootState } from '../store'
 import {
-  Character, Characters, Data, InitiativeParticipant, InitiativeTower, Screen, Turn,
+  Character, Characters, Data, HeroCard, InitiativeParticipant, InitiativeTower, Screen, Turn,
 } from '../types'
 
 // Real time
@@ -26,6 +26,10 @@ export const selectDisplayData = (state: RootState): Data => state.data.display
 export const selectCharacters = (data: Data): Characters => data.characters
 
 export const selectCharactersList = (data: Data): Character[] => sortBy('names.real.name', data.characters)
+
+// Hero Card
+
+export const selectHeroCard = (data: Data): HeroCard => data.heroCard
 
 // Initiative
 

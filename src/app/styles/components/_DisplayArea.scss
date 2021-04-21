@@ -1,7 +1,6 @@
 .display-area {
-  @include flex-center;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
   flex: 1;
-  grid-gap: $card-gap;
   background-color: #00ff00;
 }

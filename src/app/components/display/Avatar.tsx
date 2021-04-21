@@ -1,20 +1,27 @@
 import React from 'react'
-import { createRadialGradient } from '../../functions/gradient'
+import { createLinearGradient, createRadialGradient } from '../../functions/gradient'
 import { GradientColours } from '../../types/Gradient'
 
 export interface AvatarProps {
   backgroundGradientColours?: GradientColours
+  height?: number,
+  linearGradient?: boolean,
   size?: number,
   url: string,
+  width?: number,
 }
 
 export const Avatar = ({
   backgroundGradientColours,
+  height,
+  linearGradient = false,
   size = 100,
   url,
+  width,
 }: AvatarProps): JSX.Element => {
+  const createGradient = linearGradient ? createLinearGradient : createRadialGradient
   const background = backgroundGradientColours
-    ? createRadialGradient(backgroundGradientColours)
+    ? createGradient(backgroundGradientColours)
     : undefined
 
   return (
@@ -23,8 +30,8 @@ export const Avatar = ({
       src={url}
       style={{
         background,
-        height: size,
-        width: size,
+        height: height || size,
+        width: width || size,
       }}
     />
   )
