@@ -4,34 +4,43 @@
   height: $ce-img-height;
   background-color: $gray;
 
-  .right-images {
-    position: absolute;
-    top: $ce-right-images-margin;
-    right: $ce-right-images-margin;
-    bottom: 0;
-    width: $scc-avatar-size;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
   .avatar-large {
     width: $ce-avatar-large;
   }
 
-  .avatar-small {
-    @include rounded-corners;
-    @include square($scc-avatar-size);
-    overflow: hidden;
-  }
+  .right-images {
+    position: absolute;
+    top: $ce-right-images-gap;
+    right: $ce-right-images-gap;
+    bottom: $ce-right-images-gap;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 
-  .organisation-icon-container {
-    @include flex-center;
-    flex: 1;
-  }
+    .avatars {
+      display: flex;
+      height: $scc-avatar-size;
+      flex-direction: row-reverse;
+      grid-gap: $ce-right-images-gap;
+    }
 
-  .organisation-icon {
-    @include square($scc-icon-size);
+    .avatar-small {
+      @include rounded-corners;
+      @include square($scc-avatar-size);
+      overflow: hidden;
+    }
+
+    .organisation-icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+      width: $scc-avatar-size;
+
+      .organisation-icon {
+        @include square($scc-icon-size);
+      }
+    }
   }
 }
 

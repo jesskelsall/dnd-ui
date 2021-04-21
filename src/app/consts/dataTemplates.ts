@@ -96,6 +96,8 @@ export const CHARACTER_TEMPLATE: Character = {
     real: NAME_TEMPLATE,
   },
   player: {
+    discordName: NAME_TEMPLATE,
+    discordURL: '',
     name: NAME_TEMPLATE,
     pronouns: '',
   },

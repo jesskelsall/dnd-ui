@@ -24,49 +24,58 @@ export const LargeCharacterCard = ({
   player,
   pronouns,
   race,
-}: LargeCharacterCardProps): JSX.Element => (
-  <div className="character-card character-card-large" style={{ '--name-scale': name.scale } as CustomCSSProperties}>
-    {/* Shadows */}
-    <div className="character-card-large__box shadow" />
-    <div className="character-card-large__avatar shadow" />
+}: LargeCharacterCardProps): JSX.Element => {
+  const renderIfValue = (value: string, tag: string): JSX.Element | null => (value
+    ? React.createElement(tag, null, value) : null)
 
-    {/* Elements */}
-    <div className="character-card-large__box">
-      <div className="character-card-large__text">
-        <div className="grouping">
-          <h1>{name.name}</h1>
-          {pronouns && <h3>{pronouns}</h3>}
-          {race && <h3>{choiceName(race, RACES)}</h3>}
-          {classes && <h3>{classes}</h3>}
-        </div>
+  return (
+    <div className="character-card character-card-large" style={{ '--name-scale': name.scale } as CustomCSSProperties}>
+      {/* Shadows */}
+      <div className="character-card-large__box shadow" />
+      <div className="character-card-large__avatar shadow" />
 
-        {affiliation && (
+      {/* Elements */}
+      <div className="character-card-large__box">
+        <div className="character-card-large__text">
           <div className="grouping">
-            <h2>{choiceName(affiliation.rank, RANKS)}</h2>
-            <h3>{affiliation.division}</h3>
-            <h3>{affiliation.group}</h3>
+            <h1>{name.name}</h1>
+            {renderIfValue(pronouns, 'h3')}
+            {race && <h3>{choiceName(race, RACES)}</h3>}
+            {renderIfValue(classes, 'h3')}
+          </div>
+
+          {affiliation && (
+          <div className="grouping">
+            {affiliation.rank && <h2>{choiceName(affiliation.rank, RANKS)}</h2>}
+            {renderIfValue(affiliation.division, 'h3')}
+            {renderIfValue(affiliation.group, 'h3')}
             {affiliation.iconURL && (
               <img alt="icon" className="character-card-large__icon" src={affiliation.iconURL} />
             )}
           </div>
-        )}
+          )}
 
-        {player && (
+          {player && (
           <div className="grouping">
-            <h2>{player.name.name}</h2>
-            <h3>{player.pronouns}</h3>
+            {renderIfValue(player.name.name, 'h2')}
+            {renderIfValue(player.pronouns, 'h3')}
+            {renderIfValue(player.discordName.name, 'h3')}
+            {player.discordURL && (
+              <img alt="avatar" className="character-card-large__discord" src={player.discordURL} />
+            )}
           </div>
-        )}
+          )}
+        </div>
+      </div>
+      <div className="character-card-large__avatar">
+        <Avatar
+          backgroundGradientColours={avatar.backgroundGradientColours}
+          height={600}
+          linearGradient
+          url={avatar.url}
+          width={352}
+        />
       </div>
     </div>
-    <div className="character-card-large__avatar">
-      <Avatar
-        backgroundGradientColours={avatar.backgroundGradientColours}
-        height={600}
-        linearGradient
-        url={avatar.url}
-        width={352}
-      />
-    </div>
-  </div>
-)
+  )
+}

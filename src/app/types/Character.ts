@@ -11,6 +11,8 @@ export interface Affiliation {
 }
 
 export interface Player {
+  discordName: Name,
+  discordURL: string,
   name: Name,
   pronouns: string,
 }

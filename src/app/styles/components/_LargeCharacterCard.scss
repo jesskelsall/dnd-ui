@@ -50,6 +50,12 @@ $lcc-width: $lcc-box-left + $lcc-box-width + $shadow-horizontal;
   margin-top: $card-text-padding * 2;
   height: 200px;
 
+  .character-card-large__discord {
+    @include square(100px);
+    @include rounded-corners;
+    margin-top: 12px;
+  }
+
   .character-card-large__icon {
     margin-top: $lcc-content-avatar-gap;
   }

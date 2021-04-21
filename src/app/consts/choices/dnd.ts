@@ -35,6 +35,7 @@ export const RACES: Choice[] = arrayToChoices([
   ['kobold', 'Kobold'],
   ['leonin', 'Leonin'],
   ['lizardfolk', 'Lizardfolk'],
+  ['minotaur', 'Minotaur'],
   ['satyr', 'Satyr'],
   ['shifter', 'Shifter'],
   ['tabaxi', 'Tabaxi'],

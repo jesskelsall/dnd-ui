@@ -143,17 +143,26 @@ export const CharacterEditor = ({
         }}
       >
         {editingCharacter.avatar.largeURL && (
-        <img alt="large" className="avatar-large" src={editingCharacter.avatar.largeURL} />
+          <img alt="large" className="avatar-large" src={editingCharacter.avatar.largeURL} />
         )}
         <div className="right-images">
-          {editingCharacter.avatar.smallURL && (
-          <div className="avatar-small">
-            <Avatar
-              backgroundGradientColours={gradientColours}
-              url={editingCharacter.avatar.smallURL}
-            />
+          <div className="avatars">
+            {editingCharacter.avatar.smallURL && (
+              <div className="avatar-small">
+                <Avatar
+                  backgroundGradientColours={gradientColours}
+                  url={editingCharacter.avatar.smallURL}
+                />
+              </div>
+            )}
+            {editingCharacter.player.discordURL && (
+              <div className="avatar-small">
+                <Avatar
+                  url={editingCharacter.player.discordURL}
+                />
+              </div>
+            )}
           </div>
-          )}
           {editingCharacter.affiliation.iconURL && (
           <div className="organisation-icon-container">
             <img
@@ -291,6 +300,13 @@ export const CharacterEditor = ({
             <label className="col-sm-2 col-form-label">Pronouns</label>
             <div className="col">
               {renderSimpleTextInput('player.pronouns')}
+            </div>
+          </div>
+          {renderNameFields('player.discordName', 'Discord Name')}
+          <div className="row mb-3">
+            <label className="col-sm-2 col-form-label">Discord Avatar</label>
+            <div className="col">
+              {renderSimpleTextInput('player.discordURL')}
             </div>
           </div>
         </div>
