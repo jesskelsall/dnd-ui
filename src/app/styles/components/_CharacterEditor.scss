@@ -30,6 +30,26 @@
       overflow: hidden;
     }
 
+    .icons {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      flex-grow: 1;
+      grid-gap: $ce-right-images-gap;
+    }
+
+    .icon-container {
+      display: flex;
+      flex-grow: 1;
+      justify-content: center;
+      align-items: center;
+      width: $scc-avatar-size;
+    }
+
+    .icon {
+      @include square($scc-icon-size);
+    }
+
     .organisation-icon-container {
       display: flex;
       justify-content: center;

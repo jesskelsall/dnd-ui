@@ -4,13 +4,21 @@ import {
 } from 'lodash/fp'
 import React, { useState } from 'react'
 import {
-  CLASSES, EMPTY_CHOICE, GRADIENT_COLOURS, IMAGE_TYPES, NAME_SCALES, ORGANISATIONS, RACES, RANKS,
+  CLASSES,
+  EMPTY_CHOICE,
+  GODS,
+  GRADIENT_COLOURS,
+  IMAGE_TYPES,
+  NAME_SCALES,
+  ORGANISATIONS,
+  RACES,
+  RANKS,
 } from '../../consts'
 import {
   classesToListWithLevels, classesToPrimaryClass, createLinearGradient, fileNameToUrl,
 } from '../../functions'
 import {
-  Character, Choice, ChoiceValue, Class, GradientColours,
+  Character, Choice, ChoiceValue, ChoiceWithPath, Class, GradientColours,
 } from '../../types'
 import { Avatar } from '../display/Avatar'
 import {
@@ -78,12 +86,16 @@ export const CharacterEditor = ({
     )(editingCharacter))
   }
 
-  const onChangeRank = (value: string) => {
-    const choice = RANKS.find((rank) => rank.value === value)
+  const onChangeIcon = (
+    imageType: string,
+    iconType: string,
+    choices: ChoiceWithPath[],
+  ) => (value: string) => {
+    const choice = choices.find((choiceWithPath) => choiceWithPath.value === value)
 
     setEditingCharacter(flow(
-      set('affiliation.rank', choice ? choice.value : ''),
-      set('affiliation.iconURL', choice ? fileNameToUrl(IMAGE_TYPES.ICON, choice.path) : ''),
+      set(`affiliation.${iconType}`, choice ? choice.value : ''),
+      set(`icons.${iconType}`, choice ? fileNameToUrl(imageType, choice.path) : ''),
     )(editingCharacter))
   }
 
@@ -163,15 +175,18 @@ export const CharacterEditor = ({
               </div>
             )}
           </div>
-          {editingCharacter.affiliation.iconURL && (
-          <div className="organisation-icon-container">
-            <img
-              alt="icon"
-              className="organisation-icon"
-              src={editingCharacter.affiliation.iconURL}
-            />
+          <div className="icons">
+            {editingCharacter.affiliation.rank && (
+              <div className="icon-container">
+                <img alt="icon" className="icon" src={editingCharacter.icons.rank} />
+              </div>
+            )}
+            {editingCharacter.affiliation.god && (
+            <div className="icon-container">
+              <img alt="icon" className="icon" src={editingCharacter.icons.god} />
+            </div>
+            )}
           </div>
-          )}
         </div>
       </div>
 
@@ -237,7 +252,7 @@ export const CharacterEditor = ({
             <label className="col-sm-2 col-form-label">Rank</label>
             <div className="col">
               <Dropdown
-                onChange={onChangeRank}
+                onChange={onChangeIcon(IMAGE_TYPES.ICON, 'rank', RANKS)}
                 options={[EMPTY_CHOICE, ...RANKS]}
                 value={editingCharacter.affiliation.rank}
               />
@@ -252,6 +267,18 @@ export const CharacterEditor = ({
             <div className="col">
               {renderSimpleTextInput('affiliation.group')}
             </div>
+          </div>
+          <div className="row mb-3">
+            <label className="col-sm-2 col-form-label">God</label>
+            <div className="col">
+              <Dropdown
+                onChange={onChangeIcon(IMAGE_TYPES.SYMBOL, 'god', GODS)}
+                options={[EMPTY_CHOICE, ...GODS]}
+                value={editingCharacter.affiliation.god}
+              />
+            </div>
+            <label className="col-sm-2 col-form-label" />
+            <div className="col" />
           </div>
         </div>
 

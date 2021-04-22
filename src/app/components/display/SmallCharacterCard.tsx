@@ -3,7 +3,7 @@ import { Avatar, AvatarProps } from './Avatar'
 
 export interface SmallCharacterCardProps {
   avatar: AvatarProps,
-  iconURL: string,
+  icon: string,
   textPrimary: string,
   textPrimaryScale: number,
   textSecondary: string,
@@ -12,7 +12,7 @@ export interface SmallCharacterCardProps {
 
 export const SmallCharacterCard = ({
   avatar,
-  iconURL,
+  icon,
   textPrimary,
   textPrimaryScale,
   textSecondary,
@@ -33,7 +33,7 @@ export const SmallCharacterCard = ({
           {textSecondary && <h2>{textSecondary}</h2>}
           {textTertiary && <h3>{textTertiary}</h3>}
         </div>
-        {iconURL && <img alt="icon" className="character-card__icon" src={iconURL} />}
+        {icon && <img alt="icon" className="character-card__icon" src={icon} />}
       </div>
       {hasAvatar && (
         <div className="character-card__avatar">

@@ -62,8 +62,8 @@ export const TURN_TEMPLATE: Turn = {
 export const CHARACTER_TEMPLATE: Character = {
   affiliation: {
     division: '',
+    god: '',
     group: '',
-    iconURL: '',
     organisation: '',
     rank: '',
   },
@@ -85,6 +85,10 @@ export const CHARACTER_TEMPLATE: Character = {
     sorcerer: 0,
     warlock: 0,
     wizard: 0,
+  },
+  icons: {
+    god: '',
+    rank: '',
   },
   id: '',
   initiative: {

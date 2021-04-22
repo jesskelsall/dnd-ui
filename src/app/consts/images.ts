@@ -4,4 +4,5 @@ export const IMAGE_TYPES = {
   ICON: 'icons',
   LARGE: 'people/portraits',
   SMALL: 'people/tokens',
+  SYMBOL: 'symbols',
 }

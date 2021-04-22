@@ -4,6 +4,9 @@ $lcc-avatar-ratio: 1200px / 2048px;
 $lcc-avatar-height: 600px;
 $lcc-avatar-width: $lcc-avatar-height * $lcc-avatar-ratio;
 
+$lcc-icon-size: 50px;
+$lcc-discord-size: 100px;
+
 $lcc-box-left: $shadow-horizontal * 2;
 
 $lcc-content-width: name-width(28px);
@@ -51,13 +54,19 @@ $lcc-width: $lcc-box-left + $lcc-box-width + $shadow-horizontal;
   height: 200px;
 
   .character-card-large__discord {
-    @include square(100px);
+    @include square($lcc-discord-size);
     @include rounded-corners;
     margin-top: 12px;
   }
 
-  .character-card-large__icon {
+  .character-card-large__icons {
+    display: flex;
+    gap: $card-text-padding;
     margin-top: $lcc-content-avatar-gap;
+  }
+
+  .character-card-large__icon {
+    @include square($lcc-icon-size);
   }
 
   .grouping {

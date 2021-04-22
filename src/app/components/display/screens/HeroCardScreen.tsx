@@ -25,6 +25,7 @@ export const HeroCardScreen = ({
           backgroundGradientColours: character.avatar.gradientColours,
         }}
         classes={LINE_TRANSFORMERS.classesWithLevels(character)}
+        icons={character.icons}
         name={character.names.real}
         player={character.player}
         pronouns={character.pronouns}

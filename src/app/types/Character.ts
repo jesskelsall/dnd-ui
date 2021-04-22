@@ -4,9 +4,14 @@ import { Name } from './Name'
 
 export interface Affiliation {
   division: string,
+  god: string,
   group: string,
-  iconURL: string,
   organisation: string,
+  rank: string,
+}
+
+export interface Icons {
+  god: string,
   rank: string,
 }
 
@@ -25,6 +30,7 @@ export interface Character {
     largeURL: string,
   },
   classes: Classes,
+  icons: Icons,
   id: string,
   initiative: {
     bonus: number,

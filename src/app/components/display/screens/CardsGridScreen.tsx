@@ -28,7 +28,7 @@ export const CardsGridScreen = ({
               backgroundGradientColours: character.avatar.gradientColours,
               url: character.avatar.smallURL,
             }}
-            iconURL={character.affiliation.iconURL}
+            icon={character.icons.rank}
             key={character.id}
             textPrimaryScale={1}
             textPrimary={LINE_TRANSFORMERS.realName(character)}

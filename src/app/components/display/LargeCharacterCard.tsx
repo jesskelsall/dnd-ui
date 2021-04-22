@@ -2,7 +2,7 @@ import React from 'react'
 import { RACES, RANKS } from '../../consts'
 import { choiceName } from '../../functions'
 import {
-  Affiliation, CustomCSSProperties, Name, Player,
+  Affiliation, CustomCSSProperties, Icons, Name, Player,
 } from '../../types'
 import { Avatar, AvatarProps } from './Avatar'
 
@@ -10,6 +10,7 @@ export interface LargeCharacterCardProps {
   affiliation?: Affiliation,
   avatar: AvatarProps,
   classes: string,
+  icons: Icons,
   name: Name,
   player?: Player,
   pronouns: string,
@@ -20,6 +21,7 @@ export const LargeCharacterCard = ({
   affiliation,
   avatar,
   classes,
+  icons,
   name,
   player,
   pronouns,
@@ -49,8 +51,15 @@ export const LargeCharacterCard = ({
             {affiliation.rank && <h2>{choiceName(affiliation.rank, RANKS)}</h2>}
             {renderIfValue(affiliation.division, 'h3')}
             {renderIfValue(affiliation.group, 'h3')}
-            {affiliation.iconURL && (
-              <img alt="icon" className="character-card-large__icon" src={affiliation.iconURL} />
+            {(affiliation.rank || affiliation.god) && (
+              <div className="character-card-large__icons">
+                {affiliation.rank && (
+                <img alt="icon" className="character-card-large__icon" src={icons.rank} />
+                )}
+                {affiliation.god && (
+                <img alt="icon" className="character-card-large__icon" src={icons.god} />
+                )}
+              </div>
             )}
           </div>
           )}

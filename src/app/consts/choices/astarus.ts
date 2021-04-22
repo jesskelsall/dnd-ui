@@ -1,6 +1,13 @@
 import { arrayToChoices, arrayToChoicesWithPaths } from '../../functions/choice'
 import { Choice, ChoiceWithPath } from '../../types'
 
+export const GODS: ChoiceWithPath[] = arrayToChoicesWithPaths([
+  ['bhygar', 'Bhygar', 'e4dc1974ee3fc83b'],
+  ['gormox', 'Gormox', 'ea264dc092b05d09'],
+  ['kirrel', 'Kirrel', '527b4be9705967bf'],
+  ['valnos', 'Valnos', 'a51347a25084e8dc'],
+])
+
 export const ORGANISATIONS: Choice[] = arrayToChoices([
   ['astornox', 'Astornox'],
   ['astorrel', 'Astorrel'],
