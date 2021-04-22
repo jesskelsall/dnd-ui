@@ -14,6 +14,11 @@ $pc-box-width: card-width-padding($pc-initiative-width) + $pc-avatar-width + car
 $pc-height: $pc-box-height + $shadow-vertical;
 $pc-width: $pc-box-width + $shadow-horizontal;
 
+@mixin left-radius {
+  border-bottom-left-radius: $border-radius-large;
+  border-top-left-radius: $border-radius-large;
+}
+
 // Styles
 
 .participant-card {
@@ -40,8 +45,14 @@ $pc-width: $pc-box-width + $shadow-horizontal;
     left: $pc-initiative-width;
 
     .participant-card__avatar {
-      border-bottom-left-radius: $border-radius-large;
-      border-top-left-radius: $border-radius-large;
+      @include left-radius;
+
+      &.status-wounded,
+      &.status-unconscious {
+        &::after {
+          @include left-radius;
+        }
+      }
     }
   }
 

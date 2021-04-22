@@ -9,7 +9,9 @@ export type Line =
   'group' |
   'organisation' |
   'organisationAndDivision' |
+  'playerDiscord' |
   'playerName' |
+  'playerNameAndDiscord' |
   'playerNameAndPronouns' |
   'playerPronouns' |
   'pronouns' |

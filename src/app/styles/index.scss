@@ -13,10 +13,10 @@
 
 @import './elements/area';
 @import './elements/page';
+@import './elements/screen';
 @import './elements/section';
 
 @import './components/BackgroundGradient';
-@import './components/CardsGridScreen';
 @import './components/CharacterEditor';
 @import './components/CharactersPage';
 @import './components/ControlArea';
@@ -28,6 +28,7 @@
 @import './components/InitiativeTowerPage';
 @import './components/Navbar';
 @import './components/ParticipantCard';
+@import './components/ParticipantControl';
 @import './components/SmallCharacterCard';
 // Uses variables from other components
 @import './components/LargeCharacterCard';

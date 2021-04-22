@@ -1,0 +1,58 @@
+$psc-avatar-size: 48px;
+
+.participant-control {
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    padding-left: calc(48px + 1rem);
+    height: $psc-avatar-size;
+
+    &.turn-active {
+      background-color: $success;
+      color: $white;
+    }
+
+    &.turn-next-player {
+      background-color: $warning;
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    .participant-control__avatar {
+      @include square($psc-avatar-size);
+      background-color: blue;
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      border-top-left-radius: calc(0.25rem - 1px);
+    }
+  }
+
+  .card-body {
+    .row.mb-3:last-of-type {
+      margin-bottom: 0 !important;
+    }
+
+    .col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.hit-points {
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      .btn {
+        flex-grow: 1;
+      }
+    }
+
+    input[type="number"] {
+      text-align: center;
+    }
+  }
+}

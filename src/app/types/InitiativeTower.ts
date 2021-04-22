@@ -6,11 +6,11 @@ export interface InitiativeParticipant {
   characterId: string,
   health: {
     current: number,
-    maxOverride: number | null,
-    temp: number | null,
+    max: number,
+    temp: number,
   },
   id: string,
-  initiative: number,
+  initiative?: number,
   quantity: number,
   show: {
     details: boolean,

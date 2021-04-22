@@ -25,11 +25,11 @@ export const INITIATIVE_PARTICIPANT_TEMPLATE: InitiativeParticipant = {
   characterId: '',
   health: {
     current: 0,
-    maxOverride: null,
-    temp: null,
+    max: 0,
+    temp: 0,
   },
   id: '',
-  initiative: 0,
+  initiative: undefined,
   quantity: 1,
   show: {
     details: true,

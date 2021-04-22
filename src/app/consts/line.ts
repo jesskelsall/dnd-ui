@@ -12,6 +12,7 @@ const division: LineTransformer = (character) => character.affiliation.division
 const organisation: LineTransformer = (
   character,
 ) => choiceName(character.affiliation.organisation, ORGANISATIONS)
+const playerDiscord: LineTransformer = (character) => character.player.discordName.name
 const playerName: LineTransformer = (character) => character.player.name.name
 const playerPronouns: LineTransformer = (character) => character.player.pronouns
 const pronouns: LineTransformer = (character) => character.pronouns
@@ -32,7 +33,9 @@ export const LINE_TRANSFORMERS: Record<Line, LineTransformer> = {
   raceAndPronouns: joinLineTransformers([race, pronouns], LINE_SEPARATOR),
   rank: (character: Character) => choiceName(character.affiliation.rank, RANKS),
   realName: (character: Character) => character.names.real.name,
+  playerDiscord,
   playerName,
+  playerNameAndDiscord: joinLineTransformers([playerName, playerDiscord], LINE_SEPARATOR),
   playerNameAndPronouns: joinLineTransformers([playerName, playerPronouns], LINE_SEPARATOR),
   playerPronouns,
   unknown: () => '???',

@@ -1,0 +1,18 @@
+.screen {
+  @extend .page;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin: $card-gap;
+  grid-gap: $column-gap;
+
+  &.screen-bottom-right {
+    align-items: flex-end;
+  }
+}
+
+.screen-column {
+  display: flex;
+  flex-direction: column;
+  grid-gap: $card-gap;
+}

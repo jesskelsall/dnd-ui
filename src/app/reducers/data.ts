@@ -85,9 +85,13 @@ export const dataSlice = createSlice({
     // Adds a new participant using the given character ID
     createParticipant: (state, action: PayloadAction<string>) => {
       const participantId = randomId()
+      const character = state.control.characters[action.payload]
+
       const participant = flow(
-        set('characterId', action.payload),
+        set('characterId', character.id),
         set('id', participantId),
+        set('health.current', character.initiative.maxHealth),
+        set('health.max', character.initiative.maxHealth),
       )(INITIATIVE_PARTICIPANT_TEMPLATE)
 
       return updateParticipants(set(participantId, participant), state)

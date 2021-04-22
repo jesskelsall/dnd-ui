@@ -17,7 +17,7 @@ export const HeroCardScreen = ({
   const character = characters[heroCard.characterId]
 
   return (
-    <div className="page hero-card-screen">
+    <div className="screen">
       <LargeCharacterCard
         affiliation={character.affiliation}
         avatar={{

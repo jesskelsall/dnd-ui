@@ -41,8 +41,6 @@ export const selectInitiativeParticipants = (
 
 export const selectInitiativeTurn = (data: Data): Turn => data.initiativeTower.turn
 
-export const selectInitiativeIsActive = (data: Data): boolean => data.initiativeTower.turn.round > 0
-
 export const selectInitiativeNextPlayerTurn = createSelector(
   selectCharacters,
   selectInitiativeParticipants,

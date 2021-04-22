@@ -1,14 +1,19 @@
 import classNames from 'classnames'
+import {
+  isEqual, sortBy, uniq,
+} from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { EMPTY_CHOICE, INITIATIVE_TOWER_TEMPLATE } from '../../../consts'
-import { advanceTurn, createParticipant, resetInitiativeTower } from '../../../reducers'
+import { isActiveTurn } from '../../../functions'
+import {
+  advanceTurn, createParticipant, deleteParticipant, resetInitiativeTower, updateParticipant,
+} from '../../../reducers'
 import {
   selectCharacters,
   selectCharactersList,
   selectControlData,
   selectInitiativeHasParticipants,
-  selectInitiativeIsActive,
   selectInitiativeParticipants,
   selectInitiativeTower,
   selectInitiativeTurn,
@@ -25,15 +30,31 @@ export const InitiativeTowerPage = (): JSX.Element => {
   const hasParticipants = selectInitiativeHasParticipants(data)
   const initiativeParticipants = selectInitiativeParticipants(data)
   const initiativeTower = selectInitiativeTower(data)
-  const isActive = selectInitiativeIsActive(data)
   const turn = selectInitiativeTurn(data)
 
-  const isDefaultState = initiativeTower === INITIATIVE_TOWER_TEMPLATE
+  const isDefaultState = isEqual(initiativeTower, INITIATIVE_TOWER_TEMPLATE)
 
-  const addCharacters: Choice[] = charactersList.map((character) => ({
-    label: character.names.real.name,
-    value: character.id,
-  }))
+  const initiativeParticipantCharacterIds: string[] = uniq(
+    initiativeParticipants.map((participant) => participant.characterId),
+  )
+
+  const addCharacters: Choice[] = charactersList
+    .filter((character) => !initiativeParticipantCharacterIds.includes(character.id))
+    .map((character) => ({
+      label: character.names.real.name,
+      value: character.id,
+    }))
+
+  const isActive = isActiveTurn(turn)
+  const sortedParticipants = isActive
+    ? initiativeParticipants
+    : sortBy(
+      [
+        (participant) => !characters[participant.characterId].player.name.name,
+        (participant) => characters[participant.characterId].names.real.name,
+      ],
+      initiativeParticipants,
+    )
 
   return (
     <div className="page initiative-tower">
@@ -80,11 +101,14 @@ export const InitiativeTowerPage = (): JSX.Element => {
 
       <div className="page page-scroll participants">
         <div className="section">
-          {initiativeParticipants.map((participant) => (
+          {sortedParticipants.map((participant) => (
             <ParticipantControl
               character={characters[participant.characterId]}
               key={participant.id}
+              onDelete={() => dispatch(deleteParticipant(participant.id))}
+              onUpdate={(updatedParticipant) => dispatch(updateParticipant(updatedParticipant))}
               participant={participant}
+              participantTurn={isActive && participant.initiative === turn.initiative ? 'active' : 'inactive'}
               turn={turn}
             />
           ))}

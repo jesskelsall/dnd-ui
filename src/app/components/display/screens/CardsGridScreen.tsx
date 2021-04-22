@@ -20,8 +20,8 @@ export const CardsGridScreen = ({
   )
 
   return (
-    <div className="page cards-grid-screen">
-      <div className="cards-grid-column">
+    <div className="screen">
+      <div className="screen-column">
         {sortedCharacters.map((character) => (
           <SmallCharacterCard
             avatar={{

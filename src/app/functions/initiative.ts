@@ -1,5 +1,11 @@
 import { InitiativeParticipant, Turn } from '../types/InitiativeTower'
 
+export const isActiveTurn = (turn: Turn): boolean => turn.round > 0
+
+export const participantInitiative = (
+  participant: InitiativeParticipant,
+): number => participant.initiative || 0
+
 export const nextTurn = (
   participants: InitiativeParticipant[],
   turn: Turn,
@@ -11,19 +17,21 @@ export const nextTurn = (
     }
   }
 
-  const sortedParticipants = participants.sort((a, b) => b.initiative - a.initiative)
+  const sortedParticipants = participants.sort(
+    (a, b) => participantInitiative(b) - participantInitiative(a),
+  )
   const nextParticipants = participants
-    .filter((participant) => participant.initiative < turn.initiative)
+    .filter((participant) => participantInitiative(participant) < turn.initiative)
 
   if (nextParticipants.length) {
     return {
-      initiative: nextParticipants[0].initiative,
+      initiative: participantInitiative(nextParticipants[0]),
       round: turn.round,
     }
   }
 
   return {
-    initiative: sortedParticipants[0].initiative,
+    initiative: participantInitiative(sortedParticipants[0]),
     round: turn.round + 1,
   }
 }
