@@ -1,0 +1,50 @@
+// Variables
+
+$tc-text-size: 38px;
+
+$tc-box-height: $pc-box-height;
+$tc-box-width: 140px;
+
+$tc-height: $pc-height;
+$tc-width: $tc-box-width + $shadow-horizontal;
+
+// Styles
+
+.timer-card {
+  position: relative;
+  height: $tc-height;
+  width: $tc-width;
+}
+
+.timer-card__box {
+  @include rounded-corners;
+  @include absolute-shadow(0, 0);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $tc-box-width;
+  height: $tc-box-height;
+  background-color: $gray;
+
+  &.warning {
+    background-color: $warning;
+  }
+
+  &.danger {
+    background-color: $danger;
+    color: $white;
+  }
+
+  &.done {
+    background-color: $dark;
+    color: $white;
+  }
+
+  h1 {
+    padding: 0;
+    line-height: $tc-box-height;
+    font-size: $tc-text-size;
+    font-weight: bold;
+  }
+}

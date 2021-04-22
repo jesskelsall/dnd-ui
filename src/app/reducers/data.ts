@@ -9,8 +9,11 @@ import {
   INITIATIVE_PARTICIPANT_TEMPLATE,
   INITIATIVE_TOWER_TEMPLATE,
 } from '../consts'
-import { nextTurn, randomId } from '../functions'
-import { Character, DataSets, InitiativeParticipant } from '../types'
+import { getNextTurn, randomId } from '../functions'
+import { secondsToDate } from '../functions/time'
+import {
+  Character, DataSets, InitiativeParticipant, Timer,
+} from '../types'
 
 const initialState: DataSets = DATA_SETS_TEMPLATE
 
@@ -74,13 +77,33 @@ export const dataSlice = createSlice({
 
     // Advances the initiative to the next participant in order
     // Wraps around to the next round if needed
-    advanceTurn: (state) => updateInitiative(
-      set('turn', nextTurn(
-        values(state.control.initiativeTower.participants),
-        state.control.initiativeTower.turn,
-      )),
-      state,
-    ),
+    // Sets the timer target if configured
+    advanceTurn: (state) => {
+      const { initiativeTower } = state.control
+      let target: string | undefined
+      let nextTurn = getNextTurn(
+        values(initiativeTower.participants),
+        initiativeTower.turn,
+      )
+
+      // Between rounds - add a step between rounds for the timer
+      if (initiativeTower.timer.betweenRounds && nextTurn.round > initiativeTower.turn.round) {
+        target = secondsToDate(initiativeTower.timer.betweenRounds)
+        nextTurn = { ...nextTurn, initiative: nextTurn.initiative + 1 }
+      // Each turn
+      } else if (initiativeTower.timer.eachTurn) {
+        target = secondsToDate(initiativeTower.timer.eachTurn)
+      }
+
+      return update(
+        'control.initiativeTower',
+        flow(
+          set('timer.target', target),
+          set('turn', nextTurn),
+        ),
+        state,
+      )
+    },
 
     // Adds a new participant using the given character ID
     createParticipant: (state, action: PayloadAction<string>) => {
@@ -105,6 +128,9 @@ export const dataSlice = createSlice({
 
     // Wipes the initiative tower, restoring it to its default state
     resetInitiativeTower: (state) => updateInitiative(() => INITIATIVE_TOWER_TEMPLATE, state),
+
+    // Sets the initiative tower's timer properties
+    setTimer: (state, action: PayloadAction<Timer>) => set('control.initiativeTower.timer', action.payload, state),
 
     // Makes changes to an existing participant
     updateParticipant: (state, action: PayloadAction<InitiativeParticipant>) => updateParticipants(
@@ -140,6 +166,7 @@ export const {
   resetInitiativeTower,
   setHeroCharacterId,
   setRealTime,
+  setTimer,
   updateCharacter,
   updateParticipant,
 } = dataSlice.actions

@@ -1,9 +1,17 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { isEqual, orderBy, sortBy } from 'lodash/fp'
-import { nextTurn } from '../functions'
+import { getNextTurn } from '../functions'
 import { RootState } from '../store'
 import {
-  Character, Characters, Data, HeroCard, InitiativeParticipant, InitiativeTower, Screen, Turn,
+  Character,
+  Characters,
+  Data,
+  HeroCard,
+  InitiativeParticipant,
+  InitiativeTower,
+  Screen,
+  Timer,
+  Turn,
 } from '../types'
 
 // Real time
@@ -39,6 +47,8 @@ export const selectInitiativeParticipants = (
   data: Data,
 ): InitiativeParticipant[] => orderBy(['initiative'], ['desc'], data.initiativeTower.participants)
 
+export const selectInitiativeTimer = (data: Data): Timer => data.initiativeTower.timer
+
 export const selectInitiativeTurn = (data: Data): Turn => data.initiativeTower.turn
 
 export const selectInitiativeNextPlayerTurn = createSelector(
@@ -51,7 +61,7 @@ export const selectInitiativeNextPlayerTurn = createSelector(
       return character.player.name.name
     })
 
-    return nextTurn(playerParticipants, turn)
+    return getNextTurn(playerParticipants, turn)
   },
 )
 

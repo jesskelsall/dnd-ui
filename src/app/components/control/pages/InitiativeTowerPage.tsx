@@ -1,13 +1,19 @@
 import classNames from 'classnames'
 import {
-  isEqual, sortBy, uniq,
+  get,
+  isEqual, noop, set, sortBy, uniq,
 } from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { EMPTY_CHOICE, INITIATIVE_TOWER_TEMPLATE } from '../../../consts'
 import { isActiveTurn } from '../../../functions'
 import {
-  advanceTurn, createParticipant, deleteParticipant, resetInitiativeTower, updateParticipant,
+  advanceTurn,
+  createParticipant,
+  deleteParticipant,
+  resetInitiativeTower,
+
+  setTimer, updateParticipant,
 } from '../../../reducers'
 import {
   selectCharacters,
@@ -19,7 +25,7 @@ import {
   selectInitiativeTurn,
 } from '../../../selectors'
 import { Choice } from '../../../types'
-import { Dropdown } from '../../form'
+import { Dropdown, NumberInput } from '../../form'
 import { ParticipantControl } from '../ParticipantControl'
 
 export const InitiativeTowerPage = (): JSX.Element => {
@@ -55,6 +61,15 @@ export const InitiativeTowerPage = (): JSX.Element => {
       ],
       initiativeParticipants,
     )
+
+  const renderTimerNumberInput = (path: string) => (
+    <NumberInput
+      onChange={(value) => dispatch(setTimer(
+        set(path, value, initiativeTower.timer),
+      ))}
+      value={get(path, initiativeTower.timer)}
+    />
+  )
 
   return (
     <div className="page initiative-tower">
@@ -101,6 +116,28 @@ export const InitiativeTowerPage = (): JSX.Element => {
 
       <div className="page page-scroll participants">
         <div className="section">
+          {/* Timer */}
+          {!isActive && (
+            <div className="card participant-control">
+              <div className="card-header">
+                <h1>Timer</h1>
+              </div>
+              <div className="card-body">
+                <div className="row mb-3">
+                  <label className="col-sm-2 col-form-label">Each Round</label>
+                  <div className="col">
+                    {renderTimerNumberInput('betweenRounds')}
+                  </div>
+                  <label className="col-sm-2 col-form-label">Each Turn</label>
+                  <div className="col">
+                    {renderTimerNumberInput('eachTurn')}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Participants */}
           {sortedParticipants.map((participant) => (
             <ParticipantControl
               character={characters[participant.characterId]}

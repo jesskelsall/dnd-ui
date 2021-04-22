@@ -6,10 +6,12 @@ import {
   selectDisplayData,
   selectInitiativeNextPlayerTurn,
   selectInitiativeParticipants,
+  selectInitiativeTimer,
   selectInitiativeTurn,
 } from '../../../selectors'
 import { ParticipantStatus, ParticipantTurn } from '../../../types'
 import { ParticipantCard } from '../ParticipantCard'
+import { TimerCard } from '../TimerCard'
 
 export const InitiativeTowerScreen = (): JSX.Element | null => {
   const data = useSelector(selectDisplayData)
@@ -19,6 +21,7 @@ export const InitiativeTowerScreen = (): JSX.Element | null => {
 
   const characters = selectCharacters(data)
   const participants = selectInitiativeParticipants(data)
+  const timer = selectInitiativeTimer(data)
   const turn = selectInitiativeTurn(data)
   const nextPlayerTurn = selectInitiativeNextPlayerTurn(data)
 
@@ -52,6 +55,9 @@ export const InitiativeTowerScreen = (): JSX.Element | null => {
             />
           )
         })}
+      </div>
+      <div className="screen-column">
+        <TimerCard target={timer.target} />
       </div>
     </div>
   )

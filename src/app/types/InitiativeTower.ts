@@ -25,6 +25,12 @@ export interface InitiativeParticipant {
 
 export type InitiativeParticipants = Record<string, InitiativeParticipant>
 
+export interface Timer {
+  eachTurn: number,
+  betweenRounds: number,
+  target?: string,
+}
+
 export interface Turn {
   initiative: number,
   round: number,
@@ -32,5 +38,6 @@ export interface Turn {
 
 export interface InitiativeTower {
   participants: InitiativeParticipants,
+  timer: Timer,
   turn: Turn,
 }

@@ -6,7 +6,7 @@ export const participantInitiative = (
   participant: InitiativeParticipant,
 ): number => participant.initiative || 0
 
-export const nextTurn = (
+export const getNextTurn = (
   participants: InitiativeParticipant[],
   turn: Turn,
 ): Turn => {

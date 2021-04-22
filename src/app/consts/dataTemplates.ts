@@ -111,6 +111,11 @@ export const CHARACTER_TEMPLATE: Character = {
 
 export const INITIATIVE_TOWER_TEMPLATE: InitiativeTower = {
   participants: {},
+  timer: {
+    eachTurn: 0,
+    betweenRounds: 0,
+    target: undefined,
+  },
   turn: TURN_TEMPLATE,
 }
 
