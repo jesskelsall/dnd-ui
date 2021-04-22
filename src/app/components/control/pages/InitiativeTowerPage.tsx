@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import {
   get,
-  isEqual, noop, set, sortBy, uniq,
+  isEqual, set, sortBy, uniq,
 } from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'

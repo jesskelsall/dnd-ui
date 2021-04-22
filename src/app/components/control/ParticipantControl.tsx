@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import {
-  clamp, flow, get, identity, noop, set,
+  clamp, flow, get, identity, set,
 } from 'lodash/fp'
 import React, { useState } from 'react'
 import { isActiveTurn, numberToDNDModifier } from '../../functions'
