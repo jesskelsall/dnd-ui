@@ -9,6 +9,7 @@ import { LINE_SEPARATOR } from './separators'
 
 const classes: LineTransformer = (character) => classesToList(character.classes)
 const division: LineTransformer = (character) => character.affiliation.division
+const group: LineTransformer = (character) => character.affiliation.group
 const organisation: LineTransformer = (
   character,
 ) => choiceName(character.affiliation.organisation, ORGANISATIONS)
@@ -24,7 +25,8 @@ export const LINE_TRANSFORMERS: Record<Line, LineTransformer> = {
   classesWithLevels: (character: Character) => classesToListWithLevels(character.classes),
   displayName: (character: Character) => character.names.display.name,
   division,
-  group: (character: Character) => character.affiliation.group,
+  divisionAndGroup: joinLineTransformers([division, group], LINE_SEPARATOR),
+  group,
   organisation,
   organisationAndDivision: joinLineTransformers([organisation, division], LINE_SEPARATOR),
   pronouns,

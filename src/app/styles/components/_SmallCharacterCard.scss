@@ -37,7 +37,7 @@
 
     h1 {
       font-weight: bold;
-      font-size: 1em;
+      font-size: calc(28px * var(--name-scale));
       line-height: 34px;
     }
   

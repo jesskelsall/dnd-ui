@@ -1,4 +1,5 @@
 import React from 'react'
+import { CustomCSSProperties } from '../../types'
 import { Avatar, AvatarProps } from './Avatar'
 
 export interface SmallCharacterCardProps {
@@ -21,7 +22,10 @@ export const SmallCharacterCard = ({
   const hasAvatar = avatar.url
 
   return (
-    <div className="character-card character-card-small">
+    <div
+      className="character-card character-card-small"
+      style={{ '--name-scale': textPrimaryScale } as CustomCSSProperties}
+    >
       {/* Shadows */}
       <div className="character-card__box shadow" />
       {hasAvatar && <div className="character-card__avatar shadow" />}

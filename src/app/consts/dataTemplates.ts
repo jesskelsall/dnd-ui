@@ -3,6 +3,7 @@ import {
   Character,
   Data,
   DataSets,
+  GridCard,
   HeroCard,
   InitiativeParticipant,
   InitiativeTower,
@@ -14,7 +15,18 @@ import { DEFAULT_GRADIENT_COLOURS } from './gradientColours'
 import { DEFAULT_SCREEN } from './screen'
 
 export const CARDS_GRID_TEMPLATE: CardsGrid = {
-  cards: {},
+  cards: [],
+  details: {
+    avatar: 'character',
+    primary: 'realName',
+    secondary: 'raceAndClasses',
+    tertiary: 'pronouns',
+  },
+}
+
+export const GRID_CARD_TEMPLATE: GridCard = {
+  characterId: '',
+  visible: true,
 }
 
 export const HERO_CARD_TEMPLATE: HeroCard = {

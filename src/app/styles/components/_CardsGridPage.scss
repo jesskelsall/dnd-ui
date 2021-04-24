@@ -1,0 +1,21 @@
+$cgp-participant-gap: 16px;
+
+.cards-grid-page .page-scroll {
+  height: calc(100vh - #{$navbar-height * 3});
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: $cgp-participant-gap;
+
+    .participant-control__avatar {
+      border-bottom-left-radius: calc(0.25rem - 1px);
+    }
+
+    .card-controls {
+      display: flex;
+      align-items: center;
+      gap: $cgp-participant-gap;
+    }
+  }
+}

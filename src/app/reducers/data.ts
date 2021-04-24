@@ -1,18 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
-  flow, set, unset, update, values,
+  flow, reject, set, unset, update, values,
 } from 'lodash/fp'
 import { setScreen, setStore } from '../actions'
 import {
   CHARACTER_TEMPLATE,
   DATA_SETS_TEMPLATE,
+  GRID_CARD_TEMPLATE,
   INITIATIVE_PARTICIPANT_TEMPLATE,
   INITIATIVE_TOWER_TEMPLATE,
 } from '../consts'
 import { getNextTurn, randomId } from '../functions'
 import { secondsToDate } from '../functions/time'
 import {
-  Character, DataSets, InitiativeParticipant, Timer,
+  CardsGridDetails,
+  Character, DataSets, GridCard, InitiativeParticipant, Timer,
 } from '../types'
 
 const initialState: DataSets = DATA_SETS_TEMPLATE
@@ -61,6 +63,39 @@ export const dataSlice = createSlice({
         unset(action.payload.id),
         set(action.payload.character.id, action.payload.character),
       ),
+      state,
+    ),
+
+    // CARDS GRID
+
+    // Adds a new grid card to the end of the grid cards list
+    addGridCard: (state, action: PayloadAction<string>) => set(
+      'control.cardsGrid.cards',
+      [...state.control.cardsGrid.cards, set('characterId', action.payload, GRID_CARD_TEMPLATE)],
+      state,
+    ),
+
+    // Removes a specific grid card from the grid cards list by character ID
+    deleteGridCard: (state, action: PayloadAction<string>) => update(
+      'control.cardsGrid.cards',
+      reject({ characterId: action.payload }),
+      state,
+    ),
+
+    // Replaces the given grid card in the grid cards list
+    setGridCard: (state, action: PayloadAction<GridCard>) => update(
+      'control.cardsGrid.cards',
+      (cards: GridCard[]) => cards.map((card) => {
+        if (card.characterId === action.payload.characterId) return action.payload
+        return card
+      }),
+      state,
+    ),
+
+    // Replaces the cards grid details object with the one provided
+    setGridDetails: (state, action: PayloadAction<CardsGridDetails>) => set(
+      'control.cardsGrid.details',
+      action.payload,
       state,
     ),
 
@@ -156,35 +191,21 @@ export const dataSlice = createSlice({
 export const dataReducer = dataSlice.reducer
 
 export const {
-  applyChanges,
+  addGridCard,
   advanceTurn,
+  applyChanges,
   createCharacter,
   createParticipant,
   deleteCharacter,
+  deleteGridCard,
   deleteParticipant,
   duplicateCharacter,
   resetInitiativeTower,
+  setGridCard,
+  setGridDetails,
   setHeroCharacterId,
   setRealTime,
   setTimer,
   updateCharacter,
   updateParticipant,
 } = dataSlice.actions
-
-/**
- * TODO
- * Notes for future Jess:
- *
- * Finish making each of the 3 new reducers
- * Assume everything is real-time for now
- * Add catch-all that applies control data directly to display data on any change
- * Write reducers that are more strict in their use:
- * - Less setting, more adding/removing/altering
- * - Should cover all the obvious actions
- *
- * Further ahead:
- *
- * Figure out how to make control -> display propagation dependent on realTime
- * Will require an at-will reducer to copy the data across
- * Catch all reducer needs to be able to select the realTime property from another slice
- */

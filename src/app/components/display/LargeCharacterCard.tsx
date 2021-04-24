@@ -31,7 +31,10 @@ export const LargeCharacterCard = ({
     ? React.createElement(tag, null, value) : null)
 
   return (
-    <div className="character-card character-card-large" style={{ '--name-scale': name.scale } as CustomCSSProperties}>
+    <div
+      className="character-card character-card-large"
+      style={{ '--name-scale': name.scale } as CustomCSSProperties}
+    >
       {/* Shadows */}
       <div className="character-card-large__box shadow" />
       <div className="character-card-large__avatar shadow" />

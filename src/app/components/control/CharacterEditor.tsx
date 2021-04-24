@@ -86,16 +86,12 @@ export const CharacterEditor = ({
     )(editingCharacter))
   }
 
-  const onChangeIcon = (
-    imageType: string,
-    iconType: string,
-    choices: ChoiceWithPath[],
-  ) => (value: string) => {
+  const onChangeIcon = (iconType: string, choices: ChoiceWithPath[]) => (value: string) => {
     const choice = choices.find((choiceWithPath) => choiceWithPath.value === value)
 
     setEditingCharacter(flow(
       set(`affiliation.${iconType}`, choice ? choice.value : ''),
-      set(`icons.${iconType}`, choice ? fileNameToUrl(imageType, choice.path) : ''),
+      set(`icons.${iconType}`, choice ? fileNameToUrl(IMAGE_TYPES.ICON, choice.path) : ''),
     )(editingCharacter))
   }
 
@@ -252,7 +248,7 @@ export const CharacterEditor = ({
             <label className="col-sm-2 col-form-label">Rank</label>
             <div className="col">
               <Dropdown
-                onChange={onChangeIcon(IMAGE_TYPES.ICON, 'rank', RANKS)}
+                onChange={onChangeIcon('rank', RANKS)}
                 options={[EMPTY_CHOICE, ...RANKS]}
                 value={editingCharacter.affiliation.rank}
               />
@@ -272,7 +268,7 @@ export const CharacterEditor = ({
             <label className="col-sm-2 col-form-label">God</label>
             <div className="col">
               <Dropdown
-                onChange={onChangeIcon(IMAGE_TYPES.SYMBOL, 'god', GODS)}
+                onChange={onChangeIcon('god', GODS)}
                 options={[EMPTY_CHOICE, ...GODS]}
                 value={editingCharacter.affiliation.god}
               />

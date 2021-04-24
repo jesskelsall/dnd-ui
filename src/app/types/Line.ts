@@ -6,6 +6,7 @@ export type Line =
   'classesWithLevels' |
   'displayName' |
   'division' |
+  'divisionAndGroup' |
   'group' |
   'organisation' |
   'organisationAndDivision' |

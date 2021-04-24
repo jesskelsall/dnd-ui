@@ -1,6 +1,5 @@
 import React from 'react'
-import { RACES } from '../../consts'
-import { choiceName, classesToList } from '../../functions'
+import { LINE_TRANSFORMERS } from '../../consts'
 import { Character } from '../../types'
 import { Avatar } from '../display/Avatar'
 
@@ -29,9 +28,9 @@ export const CharacterControl = ({
         )}
       </div>
     </td>
-    <td>{character.names.real.name}</td>
-    <td>{choiceName(character.race, RACES)}</td>
-    <td>{classesToList(character.classes)}</td>
+    <td>{LINE_TRANSFORMERS.realName(character)}</td>
+    <td>{LINE_TRANSFORMERS.race(character)}</td>
+    <td>{LINE_TRANSFORMERS.classes(character)}</td>
     <td className="characters-list-actions">
       <div className="characters-list-actions-buttons">
         <button className="btn btn-outline-primary" onClick={onEdit} type="button">Edit</button>

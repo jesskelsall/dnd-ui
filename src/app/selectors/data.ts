@@ -1,11 +1,15 @@
 import { createSelector } from '@reduxjs/toolkit'
-import { isEqual, orderBy, sortBy } from 'lodash/fp'
+import {
+  chunk, filter, isEqual, orderBy, sortBy,
+} from 'lodash/fp'
 import { getNextTurn } from '../functions'
 import { RootState } from '../store'
 import {
+  CardsGrid,
   Character,
   Characters,
   Data,
+  GridCard,
   HeroCard,
   InitiativeParticipant,
   InitiativeTower,
@@ -34,6 +38,15 @@ export const selectDisplayData = (state: RootState): Data => state.data.display
 export const selectCharacters = (data: Data): Characters => data.characters
 
 export const selectCharactersList = (data: Data): Character[] => sortBy('names.real.name', data.characters)
+
+// Cards Grid
+
+export const selectCardsGrid = (data: Data): CardsGrid => data.cardsGrid
+
+export const selectCardsGridColumns = (data: Data): GridCard[][] => {
+  const visibleCards = data.cardsGrid.cards.filter((card) => card.visible)
+  return chunk(4, visibleCards)
+}
 
 // Hero Card
 
