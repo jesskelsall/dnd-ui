@@ -18,7 +18,7 @@ export const NumberInput = ({
   <input
     className="form-control"
     disabled={disabled}
-    onChange={(event) => onChange(parseInt(event.target.value, 10) || 0)}
+    onChange={(event) => onChange(parseFloat(event.target.value) || 0)}
     placeholder={placeholder}
     tabIndex={skipTab ? -1 : undefined}
     type="number"

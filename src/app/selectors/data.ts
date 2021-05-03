@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 import {
-  chunk, filter, isEqual, orderBy, sortBy,
+  chunk, isEqual, orderBy, sortBy,
 } from 'lodash/fp'
 import { getNextTurn } from '../functions'
 import { RootState } from '../store'
@@ -59,6 +59,11 @@ export const selectInitiativeTower = (data: Data): InitiativeTower => data.initi
 export const selectInitiativeParticipants = (
   data: Data,
 ): InitiativeParticipant[] => orderBy(['initiative'], ['desc'], data.initiativeTower.participants)
+
+export const selectInitiativeVisibleParticipants = createSelector(
+  selectInitiativeParticipants,
+  (participants) => participants.filter((participant) => participant.show.details),
+)
 
 export const selectInitiativeTimer = (data: Data): Timer => data.initiativeTower.timer
 

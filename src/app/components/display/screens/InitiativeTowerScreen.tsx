@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { isActiveTurn } from '../../../functions'
+import { getParticipantName, isActiveTurn } from '../../../functions'
 import {
   selectCharacters,
   selectDisplayData,
   selectInitiativeNextPlayerTurn,
-  selectInitiativeParticipants,
+  selectInitiativeVisibleParticipants,
   selectInitiativeTimer,
   selectInitiativeTurn,
 } from '../../../selectors'
@@ -20,7 +20,7 @@ export const InitiativeTowerScreen = (): JSX.Element | null => {
   if (!isActive) return null
 
   const characters = selectCharacters(data)
-  const participants = selectInitiativeParticipants(data)
+  const participants = selectInitiativeVisibleParticipants(data)
   const timer = selectInitiativeTimer(data)
   const turn = selectInitiativeTurn(data)
   const nextPlayerTurn = selectInitiativeNextPlayerTurn(data)
@@ -30,6 +30,8 @@ export const InitiativeTowerScreen = (): JSX.Element | null => {
       <div className="screen-column">
         {participants.map((participant) => {
           const character = characters[participant.characterId]
+          const characterName = getParticipantName(participant, character, participants)
+
           let participantTurn: ParticipantTurn = 'inactive'
           let status: ParticipantStatus = 'healthy'
 
@@ -46,10 +48,10 @@ export const InitiativeTowerScreen = (): JSX.Element | null => {
                 backgroundGradientColours: character.avatar.gradientColours,
                 url: character.avatar.smallURL,
               }}
-              initiative={participant.initiative}
+              initiative={participant.initiative ? Math.floor(participant.initiative) : undefined}
               key={participant.id}
               status={status}
-              text={character.names.real.name}
+              text={characterName}
               textScale={character.names.real.scale}
               turn={participantTurn}
             />

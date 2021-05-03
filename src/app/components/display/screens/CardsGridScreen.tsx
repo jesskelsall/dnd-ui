@@ -1,4 +1,3 @@
-import { orderBy } from 'lodash/fp'
 import React from 'react'
 import { DEFAULT_GRADIENT_COLOURS, LINE_TRANSFORMERS } from '../../../consts'
 import {
@@ -41,7 +40,7 @@ export const CardsGridScreen = ({
   return (
     <div className="screen cards-grid-screen">
       {columns.map((column) => (
-        <div className="screen-column four-cards">
+        <div className="screen-column four-cards" key={column[0].characterId}>
           {column.map((card) => {
             const character = characters[card.characterId]
 

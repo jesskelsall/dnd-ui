@@ -150,6 +150,7 @@ export const dataSlice = createSlice({
         set('id', participantId),
         set('health.current', character.initiative.maxHealth),
         set('health.max', character.initiative.maxHealth),
+        set('show.details', state.control.initiativeTower.turn.round < 1),
       )(INITIATIVE_PARTICIPANT_TEMPLATE)
 
       return updateParticipants(set(participantId, participant), state)

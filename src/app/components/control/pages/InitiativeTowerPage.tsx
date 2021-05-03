@@ -1,19 +1,18 @@
 import classNames from 'classnames'
 import {
-  get,
-  isEqual, set, sortBy, uniq,
+  get, isEqual, set, sortBy,
 } from 'lodash/fp'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { EMPTY_CHOICE, INITIATIVE_TOWER_TEMPLATE } from '../../../consts'
-import { isActiveTurn } from '../../../functions'
+import { getParticipantName, isActiveTurn } from '../../../functions'
 import {
   advanceTurn,
   createParticipant,
   deleteParticipant,
   resetInitiativeTower,
-
-  setTimer, updateParticipant,
+  setTimer,
+  updateParticipant,
 } from '../../../reducers'
 import {
   selectCharacters,
@@ -40,16 +39,10 @@ export const InitiativeTowerPage = (): JSX.Element => {
 
   const isDefaultState = isEqual(initiativeTower, INITIATIVE_TOWER_TEMPLATE)
 
-  const initiativeParticipantCharacterIds: string[] = uniq(
-    initiativeParticipants.map((participant) => participant.characterId),
-  )
-
-  const addCharacters: Choice[] = charactersList
-    .filter((character) => !initiativeParticipantCharacterIds.includes(character.id))
-    .map((character) => ({
-      label: character.names.real.name,
-      value: character.id,
-    }))
+  const addCharacters: Choice[] = charactersList.map((character) => ({
+    label: character.names.real.name,
+    value: character.id,
+  }))
 
   const isActive = isActiveTurn(turn)
   const sortedParticipants = isActive
@@ -78,18 +71,14 @@ export const InitiativeTowerPage = (): JSX.Element => {
         <div className="navbar-center d-grid gap-2 d-md-flex">
 
           {/* Add Character */}
-          {!isActive && (
-            <>
-              <label className="col-sm-2 col-form-label">Add Character</label>
-              <div className="col">
-                <Dropdown
-                  options={[EMPTY_CHOICE, ...addCharacters]}
-                  onChange={(characterId) => dispatch(createParticipant(characterId))}
-                  value=""
-                />
-              </div>
-            </>
-          )}
+          <label className="col-sm-2 col-form-label">Add Character</label>
+          <div className="col">
+            <Dropdown
+              options={[EMPTY_CHOICE, ...addCharacters]}
+              onChange={(characterId) => dispatch(createParticipant(characterId))}
+              value=""
+            />
+          </div>
 
           {/* Buttons */}
           <button
@@ -138,17 +127,22 @@ export const InitiativeTowerPage = (): JSX.Element => {
           )}
 
           {/* Participants */}
-          {sortedParticipants.map((participant) => (
-            <ParticipantControl
-              character={characters[participant.characterId]}
-              key={participant.id}
-              onDelete={() => dispatch(deleteParticipant(participant.id))}
-              onUpdate={(updatedParticipant) => dispatch(updateParticipant(updatedParticipant))}
-              participant={participant}
-              participantTurn={isActive && participant.initiative === turn.initiative ? 'active' : 'inactive'}
-              turn={turn}
-            />
-          ))}
+          {sortedParticipants.map((participant) => {
+            const character = characters[participant.characterId]
+
+            return (
+              <ParticipantControl
+                character={character}
+                name={getParticipantName(participant, character, sortedParticipants)}
+                key={participant.id}
+                onDelete={() => dispatch(deleteParticipant(participant.id))}
+                onUpdate={(updatedParticipant) => dispatch(updateParticipant(updatedParticipant))}
+                participant={participant}
+                participantTurn={isActive && participant.initiative === turn.initiative ? 'active' : 'inactive'}
+                turn={turn}
+              />
+            )
+          })}
         </div>
       </div>
     </div>

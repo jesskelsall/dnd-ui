@@ -120,7 +120,7 @@ export const CardsGridPage = (): JSX.Element => {
             const character = characters[card.characterId]
 
             return (
-              <div className="card participant-control">
+              <div className="card participant-control" key={card.characterId}>
                 <div className="card-header">
                   {character.avatar.smallURL && (
                   <div className="participant-control__avatar">
@@ -132,7 +132,7 @@ export const CardsGridPage = (): JSX.Element => {
                   </div>
                   )}
                   <h1>{character?.names.real.name}</h1>
-                  <div className="card-controls">
+                  <div className="participant-control__card-controls">
                     <div className="form-check form-switch">
                       <input
                         className="form-check-input"

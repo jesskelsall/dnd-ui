@@ -12,6 +12,7 @@ import { NumberInput } from '../form'
 
 export interface ParticipantControlProps {
   character: Character,
+  name: string,
   onDelete: () => void,
   onUpdate: (participant: InitiativeParticipant) => void,
   participant: InitiativeParticipant,
@@ -21,6 +22,7 @@ export interface ParticipantControlProps {
 
 export const ParticipantControl = ({
   character,
+  name,
   onDelete,
   onUpdate,
   participant,
@@ -64,6 +66,15 @@ export const ParticipantControl = ({
     onUpdate(updatedParticipant)
   }
 
+  const onToggleShowDetails = () => onUpdate(set(
+    'show.details', !participant.show.details, participant,
+  ))
+
+  // TODO Currently using a free variable as a quick fix. Needs its own variable.
+  const onToggleShowRealName = () => onUpdate(set(
+    'show.status', !participant.show.status, participant,
+  ))
+
   const renderSimpleNumberInput = (path: string, skipTab = true) => (
     <NumberInput
       onChange={setPath<number>(path)}
@@ -89,17 +100,37 @@ export const ParticipantControl = ({
           />
         </div>
         )}
-        <h1>{character.names.real.name}</h1>
-        {!isActive && (
-          <button
-            className="btn btn-sm btn-danger"
-            onClick={onDelete}
-            tabIndex={-1}
-            type="button"
-          >
-            Remove
-          </button>
-        )}
+        <h1>{name}</h1>
+        <div className="participant-control__card-controls">
+          <div className="form-check form-switch">
+            <input
+              className="form-check-input"
+              defaultChecked={participant.show.status}
+              onClick={onToggleShowRealName}
+              tabIndex={-1}
+              type="checkbox"
+            />
+          </div>
+          <div className="form-check form-switch">
+            <input
+              className="form-check-input"
+              defaultChecked={participant.show.details}
+              onClick={onToggleShowDetails}
+              tabIndex={-1}
+              type="checkbox"
+            />
+          </div>
+          {!isActive && (
+            <button
+              className="btn btn-sm btn-danger"
+              onClick={onDelete}
+              tabIndex={-1}
+              type="button"
+            >
+              Remove
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Body */}
@@ -138,21 +169,6 @@ export const ParticipantControl = ({
         {isActive && (
           <>
             <div className="row mb-3">
-              <div className="col">HP</div>
-              <div className="col">Temp HP</div>
-              <div className="col">Modify</div>
-              <div className="col">
-                <button
-                  className="btn btn-outline-success"
-                  disabled={!modifyIsNumber}
-                  onClick={onModifyHealth(1)}
-                  type="button"
-                >
-                  Heal
-                </button>
-              </div>
-            </div>
-            <div className="row mb-3">
               {participant.health.current === 0 ? (
                 <div className="col">
                   <button
@@ -173,6 +189,23 @@ export const ParticipantControl = ({
                   {participant.health.max}
                 </div>
               )}
+              <div className="col">Temp HP</div>
+              <div className="col">Modify</div>
+              <div className="col">
+                <button
+                  className="btn btn-outline-success"
+                  disabled={!modifyIsNumber}
+                  onClick={onModifyHealth(1)}
+                  type="button"
+                >
+                  Heal
+                </button>
+              </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col">
+                {renderSimpleNumberInput('initiative')}
+              </div>
               <div className="col">
                 {renderSimpleNumberInput('health.temp')}
               </div>

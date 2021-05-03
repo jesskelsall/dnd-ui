@@ -1,4 +1,5 @@
 $psc-avatar-size: 48px;
+$psc-controls-gap: 16px;
 
 .participant-control {
   .card-header {
@@ -28,6 +29,12 @@ $psc-avatar-size: 48px;
       left: 0;
       overflow: hidden;
       border-top-left-radius: calc(0.25rem - 1px);
+    }
+
+    .participant-control__card-controls {
+      display: flex;
+      align-items: center;
+      gap: $psc-controls-gap;
     }
   }
 
