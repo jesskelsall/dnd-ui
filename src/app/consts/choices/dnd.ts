@@ -19,6 +19,7 @@ export const CLASSES: Choice[] = arrayToChoices([
 export const RACES: Choice[] = arrayToChoices([
   ['aarakocra', 'Aarakocra'],
   ['aasimar', 'Aasimar'],
+  ['dragon', 'Dragon'],
   ['dragonborn', 'Dragonborn'],
   ['dwarf', 'Dwarf'],
   ['elf', 'Elf'],

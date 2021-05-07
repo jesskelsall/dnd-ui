@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import {
-  clamp, flow, get, identity, set,
+  flow, get, identity, LodashIdentity, LodashUpdate1x3, set, subtract, update, __,
 } from 'lodash/fp'
 import React, { useState } from 'react'
 import { isActiveTurn, numberToDNDModifier } from '../../functions'
@@ -39,23 +39,60 @@ export const ParticipantControl = ({
     set(path, value, participant),
   )
 
-  const onModifyHealth = (direction: -1 | 1) => () => {
-    const amount = (modifyHealth || 0) * direction
-    const modifiedHealth = clamp(
-      0,
+  const handleHealthModification = (updatedParticipant: InitiativeParticipant): void => {
+    setModifyHealth('')
+
+    onUpdate(flow(
+      set('status.unconscious', updatedParticipant.health.current === 0),
+      set('status.dead', false),
+    )(updatedParticipant))
+  }
+
+  // Adds to health, capped at max
+  const onHeal = () => {
+    const modifiedHealth = Math.min(
       participant.health.max,
-      participant.health.current + amount,
+      participant.health.current + (modifyHealth || 0),
     )
 
-    const updatedParticipant = flow(
-      set('health.current', modifiedHealth),
-      set('status.unconscious', modifiedHealth === 0),
-      set('status.dead', false),
-    )(participant)
-
-    setModifyHealth('')
-    onUpdate(updatedParticipant)
+    handleHealthModification(set('health.current', modifiedHealth, participant))
   }
+
+  // Removes temp HP, then health, capped at 0
+  const onDamage = () => {
+    let damage = modifyHealth || 0
+    if (!damage) return handleHealthModification(participant)
+
+    let modifyTemp: LodashIdentity | LodashUpdate1x3 = identity
+    let modifyCurrent: LodashIdentity | LodashUpdate1x3 = identity
+
+    if (participant.health.temp) {
+      const reduction = Math.min(participant.health.temp, damage)
+      damage -= reduction
+      modifyTemp = update('temp', subtract(__, reduction))
+    }
+
+    if (damage) {
+      modifyCurrent = set(
+        'current',
+        Math.max(0, participant.health.current - damage),
+      )
+    }
+
+    return handleHealthModification(update(
+      'health',
+      flow(
+        modifyTemp,
+        modifyCurrent,
+      ),
+      participant,
+    ))
+  }
+
+  // Replaces temp, makes no other changes
+  const onSetTemp = () => handleHealthModification(
+    set('health.temp', modifyHealth, participant),
+  )
 
   const onToggleDead = () => {
     const updatedParticipant = flow(
@@ -74,6 +111,13 @@ export const ParticipantControl = ({
   const onToggleShowRealName = () => onUpdate(set(
     'show.status', !participant.show.status, participant,
   ))
+
+  const renderHitPoints = (ptp: InitiativeParticipant): string => {
+    const { current, max, temp } = ptp.health
+    const tempDisplay = temp > 0 ? ` (${temp})` : ''
+
+    return `${current} / ${max}${tempDisplay}`
+  }
 
   const renderSimpleNumberInput = (path: string, skipTab = true) => (
     <NumberInput
@@ -169,8 +213,19 @@ export const ParticipantControl = ({
         {isActive && (
           <>
             <div className="row mb-3">
-              {participant.health.current === 0 ? (
-                <div className="col">
+              <div className="col">HP</div>
+              <div className="col">
+                <button
+                  className="btn btn-outline-success"
+                  disabled={!modifyIsNumber}
+                  onClick={onHeal}
+                  type="button"
+                >
+                  Heal
+                </button>
+              </div>
+              <div className="col">
+                {participant.health.current === 0 ? (
                   <button
                     className={classNames('btn', {
                       'btn-outline-dark': !isDead,
@@ -181,46 +236,36 @@ export const ParticipantControl = ({
                   >
                     {isDead ? 'Dead' : 'Alive'}
                   </button>
-                </div>
-              ) : (
-                <div className="col hit-points">
-                  {participant.health.current}
-                  {' / '}
-                  {participant.health.max}
-                </div>
-              )}
-              <div className="col">Temp HP</div>
-              <div className="col">Modify</div>
-              <div className="col">
-                <button
-                  className="btn btn-outline-success"
-                  disabled={!modifyIsNumber}
-                  onClick={onModifyHealth(1)}
-                  type="button"
-                >
-                  Heal
-                </button>
+                ) : (
+                  <button
+                    className="btn btn-outline-danger"
+                    disabled={!modifyIsNumber}
+                    onClick={onDamage}
+                    type="button"
+                  >
+                    Damage
+                  </button>
+                )}
               </div>
+              <div className="col">Initiative</div>
             </div>
             <div className="row mb-3">
-              <div className="col">
-                {renderSimpleNumberInput('initiative')}
-              </div>
-              <div className="col">
-                {renderSimpleNumberInput('health.temp')}
-              </div>
+              <div className="col hit-points">{renderHitPoints(participant)}</div>
               <div className="col">
                 <NumberInput onChange={setModifyHealth} value={modifyHealth} />
               </div>
               <div className="col">
                 <button
-                  className="btn btn-outline-danger"
+                  className="btn btn-outline-info"
                   disabled={!modifyIsNumber}
-                  onClick={onModifyHealth(-1)}
+                  onClick={onSetTemp}
                   type="button"
                 >
-                  Damage
+                  Temp HP
                 </button>
+              </div>
+              <div className="col">
+                {renderSimpleNumberInput('initiative')}
               </div>
             </div>
           </>
