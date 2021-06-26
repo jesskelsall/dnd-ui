@@ -46,7 +46,8 @@ export const InitiativeTowerScreen = (): JSX.Element | null => {
             <ParticipantCard
               avatar={{
                 backgroundGradientColours: character.avatar.gradientColours,
-                url: character.avatar.smallURL,
+                url: participant.show.status
+                  ? character.avatar.smallURL : character.player.discordURL,
               }}
               initiative={participant.initiative ? Math.floor(participant.initiative) : undefined}
               key={participant.id}

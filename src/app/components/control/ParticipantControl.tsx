@@ -34,6 +34,8 @@ export const ParticipantControl = ({
   const isActive = isActiveTurn(turn)
   const modifyIsNumber = typeof modifyHealth === 'number' && modifyHealth !== 0
   const isDead = participant.status.dead
+  const avatarUrl = participant.show.status
+    ? character.avatar.smallURL : character.player.discordURL
 
   const setPath = <V extends unknown>(path: string) => (value: V) => onUpdate(
     set(path, value, participant),
@@ -135,11 +137,11 @@ export const ParticipantControl = ({
         'turn-next-player': participantTurn === 'nextPlayer',
       })}
       >
-        {character.avatar.smallURL && (
+        {avatarUrl && (
         <div className="participant-control__avatar">
           <Avatar
             size={48}
-            url={character.avatar.smallURL}
+            url={avatarUrl}
             backgroundGradientColours={character.avatar.gradientColours}
           />
         </div>
