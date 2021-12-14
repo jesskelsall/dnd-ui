@@ -1,5 +1,7 @@
 {
   "extends": [
+    "react-app",
+    "react-app/jest",
     "airbnb",
     "plugin:@typescript-eslint/recommended"
   ],
@@ -9,6 +11,18 @@
     "node": true,
     "react": true
   },
+  "overrides": [
+    {
+      "files": [
+        "src/stories/**/*"
+      ],
+      "rules": {
+        "react/jsx-props-no-spreading": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/no-anonymous-default-export": "off"
+      }
+    }
+  ],
   "plugins": [
     "@typescript-eslint",
     "import"
